@@ -13,16 +13,16 @@
             --light: #f4f4f4;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: var(--dark);
             color: var(--light);
             font-family: 'Courier New', monospace;
-        }
-
-        /* Light mode theme */
-        body.light-mode {
-            background-color: #ffffff;
-            color: #000000;
         }
 
         .header {
@@ -30,72 +30,6 @@
             padding: 2rem;
             text-align: center;
             border-bottom: 5px solid var(--secondary);
-            position: relative;
-        }
-
-        .header .settings-dropdown {
-            position: absolute;
-            top: 1rem;
-            right: 2rem;
-        }
-
-        .settings-btn {
-            background: transparent;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--light);
-        }
-
-        body.light-mode .settings-btn {
-            color: #000000;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: var(--dark);
-            border: 1px solid var(--secondary);
-            padding: 1rem;
-            border-radius: 5px;
-            z-index: 1;
-        }
-
-        .dropdown-content.active {
-            display: block;
-        }
-
-        .dropdown-content li {
-            list-style: none;
-            margin: 0.5rem 0;
-            color: var(--light);
-        }
-
-        .dropdown-content li a {
-            color: var(--secondary);
-            text-decoration: none;
-        }
-
-        .dropdown-content .toggle-theme-btn {
-            cursor: pointer;
-            padding: 0.5rem;
-            background: var(--primary);
-            color: var(--light);
-            border-radius: 5px;
-        }
-
-        body.light-mode .dropdown-content {
-            background-color: #f4f4f4;
-        }
-
-        body.light-mode .dropdown-content li {
-            color: #000;
-        }
-
-        body.light-mode .dropdown-content .toggle-theme-btn {
-            background: #000000;
-            color: #ffffff;
         }
 
         .container {
@@ -114,11 +48,6 @@
             font-size: 1.2rem;
         }
 
-        body.light-mode .search-bar {
-            background: #f4f4f4;
-            color: #000;
-        }
-
         .app-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -133,9 +62,8 @@
             transition: transform 0.3s;
         }
 
-        body.light-mode .app-card {
-            background: #ffffff;
-            border: 2px solid #000000;
+        .app-card:hover {
+            transform: translateY(-5px);
         }
 
         .app-icon {
@@ -155,7 +83,7 @@
             margin-bottom: 1rem;
         }
 
-        .download-btn, .more-btn {
+        .download-btn {
             background: var(--primary);
             color: white;
             padding: 0.5rem 1rem;
@@ -163,12 +91,35 @@
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            margin-right: 0.5rem;
+            margin-top: 1rem;
         }
 
-        .more-btn {
-            background: #FFD700;
-            color: var(--dark);
+        .category-filter, .subcategory-filter {
+            margin: 1rem 0;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn, .subcategory-btn {
+            background: #2a2a2a;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .category-btn.active, .subcategory-btn.active {
+            background: var(--primary);
+        }
+
+        .subcategory-dropdown {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .subcategory-dropdown.active {
+            display: flex;
         }
 
         .rating {
@@ -179,55 +130,47 @@
         .rating i {
             color: var(--secondary);
         }
-
-        .sort-options {
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
-        .sort-btn {
-            background: #2a2a2a;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            cursor: pointer;
-        }
-
-        body.light-mode .sort-btn {
-            background: #eaeaea;
-            color: #000;
-        }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>🏴‍☠️ Pirate's Booty</h1>
         <p>Arrr! Find yer digital treasures here</p>
-
-        <div class="settings-dropdown">
-            <button class="settings-btn"><i class="fas fa-cog"></i></button>
-            <ul class="dropdown-content">
-                <li><a href="#" class="toggle-theme-btn">Dark Mode</a></li>
-                <li><a href="#">Account Settings</a></li>
-                <li><a href="#">Language Preferences</a></li>
-            </ul>
-        </div>
     </header>
 
     <div class="container">
         <input type="text" class="search-bar" placeholder="Search fer booty...">
 
-        <div class="sort-options">
-            <button class="sort-btn" data-sort="rating">Sort by Rating</button>
-            <button class="sort-btn" data-sort="alphabetical">Sort Alphabetically</button>
-            <button class="sort-btn" data-sort="recent">Sort by Recently Added</button>
+        <!-- Separate Category and Subcategory Filters -->
+        <div class="category-filter">
+            <h3>Categories:</h3>
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="tutorials">Tutorials</button>
+            <button class="category-btn" data-category="movies">Movies + TV</button>
+            <button class="category-btn" data-category="anime">Anime</button>
+            <button class="category-btn" data-category="manga">Manga</button>
+            <button class="category-btn" data-category="windows-games">Windows Games</button>
+            <button class="category-btn" data-category="mac-games">Mac Games</button>
+            <button class="category-btn" data-category="ebooks">E-Books</button>
+            <button class="category-btn" data-category="audiobooks">Audiobooks</button>
+            <button class="category-btn" data-category="windows-apps">Windows Apps</button>
+            <button class="category-btn" data-category="mac-apps">Mac Apps</button>
+            <button class="category-btn" data-category="android">Android Apps and Games</button>
+            <button class="category-btn" data-category="ios">iOS Apps and Games</button>
+            <button class="category-btn" data-category="vpn">VPNs</button>
+            <button class="category-btn" data-category="other">Other</button>
+        </div>
+
+        <div class="subcategory-filter">
+            <h3>Subcategories:</h3>
+            <div class="subcategory-dropdown">
+                <!-- Placeholder for subcategory buttons -->
+            </div>
         </div>
 
         <div class="app-grid">
-            <!-- Templates with Two Buttons and Star Ratings -->
-            <div class="app-card" data-category="tutorials" data-subcategory="development" data-rating="4.5" data-date="2023-02-01">
+            <!-- Templates with Star Ratings -->
+            <div class="app-card" data-category="tutorials" data-subcategory="development">
                 <i class="app-icon fas fa-code"></i>
                 <h2 class="app-title">Web Development Bootcamp</h2>
                 <div class="app-category">Development</div>
@@ -236,10 +179,9 @@
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                 </div>
                 <a href="https://example.com/webdev" class="download-btn">View Tutorial</a>
-                <a href="#" class="more-btn">More Options</a>
             </div>
 
-            <div class="app-card" data-category="movies" data-subcategory="action" data-rating="5" data-date="2023-05-01">
+            <div class="app-card" data-category="movies" data-subcategory="action">
                 <i class="app-icon fas fa-film"></i>
                 <h2 class="app-title">Pirates of the Caribbean</h2>
                 <div class="app-category">Action</div>
@@ -248,10 +190,9 @@
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
                 <a href="https://example.com/pirates" class="download-btn">Watch Now</a>
-                <a href="#" class="more-btn">More Options</a>
             </div>
 
-            <div class="app-card" data-category="anime" data-subcategory="action" data-rating="4.5" data-date="2023-03-15">
+            <div class="app-card" data-category="anime" data-subcategory="action">
                 <i class="app-icon fas fa-dragon"></i>
                 <h2 class="app-title">Naruto Shippuden</h2>
                 <div class="app-category">Action</div>
@@ -260,7 +201,18 @@
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                 </div>
                 <a href="https://example.com/naruto" class="download-btn">Watch Episodes</a>
-                <a href="#" class="more-btn">More Options</a>
+            </div>
+
+            <!-- More templates for other categories with ratings... -->
+            <div class="app-card" data-category="vpn" data-subcategory="privacy">
+                <i class="app-icon fas fa-shield-alt"></i>
+                <h2 class="app-title">SecureNet VPN</h2>
+                <div class="app-category">VPN</div>
+                <p>Surf the web privately</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <a href="https://example.com/securenet" class="download-btn">Get VPN</a>
             </div>
         </div>
     </div>
@@ -268,73 +220,68 @@
     <script>
         const searchBar = document.querySelector('.search-bar');
         const appCards = document.querySelectorAll('.app-card');
-        const settingsBtn = document.querySelector('.settings-btn');
-        const dropdown = document.querySelector('.dropdown-content');
-        const sortButtons = document.querySelectorAll('.sort-btn');
-        const themeToggleBtn = document.querySelector('.toggle-theme-btn');
-        const body = document.body;
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const subcategoryDropdown = document.querySelector('.subcategory-dropdown');
 
-        // Check for theme preference in localStorage
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'light') {
-            body.classList.add('light-mode');
-            themeToggleBtn.textContent = 'Dark Mode';
-        }
+        const subcategories = {
+            "tutorials": ["Development", "Design", "Marketing"],
+            "movies": ["Action", "Drama", "Comedy"],
+            "anime": ["Action", "Romance", "Fantasy"],
+            "windows-games": ["Shooter", "RPG", "Strategy"],
+            "mac-games": ["Adventure", "Puzzle"],
+            "ebooks": ["Fiction", "Non-Fiction", "Science"],
+            "audiobooks": ["Mystery", "Thriller", "Biography"],
+            "vpn": ["Privacy", "Streaming", "Security"],
+            // Add subcategories for other categories as needed
+        };
 
-        // Toggle settings dropdown
-        settingsBtn.addEventListener('click', () => {
-            dropdown.classList.toggle('active');
-        });
-
-        // Dark/Light mode toggle
-        themeToggleBtn.addEventListener('click', () => {
-            body.classList.toggle('light-mode');
-            if (body.classList.contains('light-mode')) {
-                themeToggleBtn.textContent = 'Dark Mode';
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeToggleBtn.textContent = 'Light Mode';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-
-        // Sorting logic
-        sortButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const sortType = button.dataset.sort;
-                const cardsArray = Array.from(appCards);
-                let sortedCards;
-
-                if (sortType === 'rating') {
-                    sortedCards = cardsArray.sort((a, b) => {
-                        return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
-                    });
-                } else if (sortType === 'alphabetical') {
-                    sortedCards = cardsArray.sort((a, b) => {
-                        return a.querySelector('.app-title').textContent.localeCompare(b.querySelector('.app-title').textContent);
-                    });
-                } else if (sortType === 'recent') {
-                    sortedCards = cardsArray.sort((a, b) => {
-                        return new Date(b.dataset.date) - new Date(a.dataset.date);
-                    });
-                }
-
-                const appGrid = document.querySelector('.app-grid');
-                appGrid.innerHTML = '';  // Clear current cards
-                sortedCards.forEach(card => {
-                    appGrid.appendChild(card);  // Append sorted cards
-                });
-            });
-        });
-
-        // Filter apps based on search term
-        searchBar.addEventListener('input', () => {
+        function filterApps() {
             const searchTerm = searchBar.value.toLowerCase();
+            const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+            const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
+
             appCards.forEach(card => {
                 const title = card.querySelector('.app-title').textContent.toLowerCase();
-                card.style.display = title.includes(searchTerm) ? 'block' : 'none';
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                const category = card.dataset.category;
+                const subcategory = card.dataset.subcategory;
+
+                const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+                const matchesCategory = activeCategory === 'all' || category === activeCategory;
+                const matchesSubcategory = !activeSubcategory || subcategory === activeSubcategory;
+
+                card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
+            });
+        }
+
+        function updateSubcategories(category) {
+            subcategoryDropdown.innerHTML = '';
+            const subcats = subcategories[category] || [];
+            subcats.forEach(subcat => {
+                const btn = document.createElement('button');
+                btn.classList.add('subcategory-btn');
+                btn.dataset.subcategory = subcat.toLowerCase();
+                btn.textContent = subcat;
+                subcategoryDropdown.appendChild(btn);
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.subcategory-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterApps();
+                });
+            });
+            subcategoryDropdown.classList.toggle('active', subcats.length > 0);
+        }
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateSubcategories(btn.dataset.category);
+                filterApps();
             });
         });
+
+        searchBar.addEventListener('input', filterApps);
     </script>
 </body>
 </html>
