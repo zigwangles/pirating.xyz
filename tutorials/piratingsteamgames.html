@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Cracking Tutorial</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #1e1e1e;
+      --secondary-color: #f1f1f1;
+      --highlight-color: #ff6347;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid var(--highlight-color);
+    }
+
+    header h1 {
+      font-size: 2em;
+      color: var(--highlight-color);
+    }
+
+    main {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .step {
+      background-color: #333;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--highlight-color);
+    }
+
+    .step h2 {
+      color: var(--highlight-color);
+      font-size: 1.5em;
+    }
+
+    .step p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    .step ul {
+      padding-left: 20px;
+      list-style: disc;
+    }
+
+    .step ol {
+      padding-left: 20px;
+      list-style: decimal;
+    }
+
+    .important {
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    footer {
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      padding: 10px;
+      text-align: center;
+      font-size: 0.9em;
+    }
+
+    a {
+      color: var(--highlight-color);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Game Cracking Tutorial</h1>
+  </header>
+
+  <main>
+    <section class="step">
+      <h2>cs.rin Method</h2>
+      <p>For this approach you will need an account on the forums. You can do this by visiting the website and registering <a href="https://cs.rin.ru/forum/">here</a>.</p>
+      <p>Once you have an account, follow these steps:</p>
+      <ol>
+        <li>Click the search button or visit <a href="https://cs.rin.ru/forum/search.php">this link</a>.</li>
+        <li>Enter the name of the game you want to download and hit Enter.</li>
+        <li>Find the thread named after your game. If there are multiple threads, choose the one labeled <strong>[info]</strong>.</li>
+        <li>Go to the last page and scroll backward to find the most recent download link.</li>
+        <li>If you are prompted for a password, it will likely be <span class="important">cs.rin.ru</span>, unless otherwise specified.</li>
+        <li>Note the build ID, as it indicates the version of the game, which will be needed later.</li>
+      </ol>
+    </section>
+
+    <section class="step">
+      <h2>GOG Method</h2>
+      <p>GOG offers DRM-free games, meaning you don't need to crack the game. Here are the steps:</p>
+      <ol>
+        <li>Visit <a href="https://gog-games.to/">this site</a> and search for the game you want.</li>
+        <li>Download the setup file and install the game.</li>
+        <li>Go to the installation folder and copy all game files into a separate folder.</li>
+        <li>Take note of the game version number displayed in the setup file (before the number in brackets).</li>
+        <li>Uninstall the game and delete unnecessary files in the game folder, such as:
+          <ul>
+            <li>EULA.txt</li>
+            <li>gog.ico</li>
+            <li>goggame-xxxxxx.hashdb</li>
+            <li>unins000.dat</li>
+            <li>webcache.zip</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <section class="step">
+      <h2>Cracking the Game</h2>
+      <p>This step involves bypassing simple DRM, but doesn't include cracking more complex systems like Denuvo. If your game is from GOG, this step is unnecessary.</p>
+      <p>If the game requires a crack, follow the methods below.</p>
+    </section>
+
+    <section class="step">
+      <h2>Golberg Method</h2>
+      <p>Golberg Steam Emu is a tool that replaces the Steam API to allow offline functionality. To use it:</p>
+      <ol>
+        <li>Download the latest build of <a href="https://mr_goldberg.gitlab.io/goldberg_emulator/">Goldberg Steam Emu</a>.</li>
+        <li>Go to the game folder and find any instance of <code>steam_api.dll</code> or <code>steam_api64.dll</code>.</li>
+        <li>Replace these files with the corresponding DLL from Goldberg.</li>
+        <li>Create a new text file named <code>steam_appid.txt</code> in the same folder.</li>
+        <li>Inside the text file, input the Steam App ID for the game (you can find it on the game's Steam store page).</li>
+      </ol>
+    </section>
+
+    <section class="step">
+      <h2>Steamless Method</h2>
+      <p>If replacing the Steam API doesn't work, you can use Steamless to remove the Steam stub.</p>
+      <ol>
+        <li>Download Steamless from <a href="https://github.com/atom0s/Steamless/releases">here</a>.</li>
+        <li>Run <code>Steamless.exe</code> and select the game executable.</li>
+        <li>Click "Unpack" to remove the Steam stub.</li>
+        <li>Check if the game works and delete the backup file created by Steamless.</li>
+      </ol>
+    </section>
+
+    <section class="step">
+      <h2>Online-Fix Method</h2>
+      <p>Online-Fix allows multiplayer cracks for games. Visit their Discord community <a href="https://discord.com/invite/online-fix-me">here</a> for more information.</p>
+      <p>If a crack is available, download it, extract it, and replace the files in the game folder.</p>
+    </section>
+
+    <section class="step">
+      <h2>Packaging the Game Correctly</h2>
+      <p>After cracking the game, you must package it for sharing. Follow these steps:</p>
+      <ol>
+        <li>Put all game files, including DLCs, into a new folder (excluding extras like artbooks or soundtracks).</li>
+        <li>Rename the folder following this format: <code>{Full Game Name} {GOG Version/Steam Build ID}</code>. For example, <code>Geometry Dash b16373064</code> or <code>Machinarium v4041</code>.</li>
+        <li>Use 7-Zip to compress the folder into a .7z archive. Name the archive after the folder.</li>
+        <li>Wait for 7-Zip to finish, and the game is ready for upload!</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Game Cracking Tutorial | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>
