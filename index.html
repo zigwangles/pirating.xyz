@@ -205,10 +205,10 @@
         <a href="https://example.com/webdev" class="download-btn">View Tutorial</a>
       </div>
       
-      <div class="app-card" data-category="movies" data-subcategory="action">
+      <div class="app-card" data-category="movies" data-subcategories="Multiple Servers", "Login">
         <i class="app-icon fas fa-film"></i>
         <h2 class="app-title">yuPPow</h2>
-        <div class="app-category">Action</div>
+        <div class="app-category">Multiple Servers, Login</div>
         <p>Excellent website to stream movies and tv with 2 to 4 available server. Also an android app!</p>
         <div class="rating">
           <i class="fas fa-star"></i>
@@ -275,23 +275,23 @@
     };
     
     function filterApps() {
-      const searchTerm = searchBar.value.toLowerCase();
-      const activeCategory = document.querySelector('.category-btn.active').dataset.category;
-      const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
-      
-      appCards.forEach(card => {
+    const searchTerm = searchBar.value.toLowerCase();
+    const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+    const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
+
+    appCards.forEach(card => {
         const title = card.querySelector('.app-title').textContent.toLowerCase();
         const desc = card.querySelector('p').textContent.toLowerCase();
         const category = card.dataset.category;
-        const subcategory = card.dataset.subcategory;
-        
+        const subcategories = card.dataset.subcategories.split(',').map(subcat => subcat.trim().toLowerCase());
+
         const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
         const matchesCategory = activeCategory === 'all' || category === activeCategory;
-        const matchesSubcategory = !activeSubcategory || subcategory === activeSubcategory;
-        
+        const matchesSubcategory = !activeSubcategory || subcategories.includes(activeSubcategory.toLowerCase());
+
         card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
-      });
-    }
+    });
+}
     
     function updateSubcategories(category) {
       subcategoryDropdown.innerHTML = '';
