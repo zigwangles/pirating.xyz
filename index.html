@@ -1,290 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pirating.xyz</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #8B0000;
-            --secondary: #FFD700;
-            --dark: #0a0a0a;
-            --light: #f4f4f4;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--dark);
-            color: var(--light);
-            font-family: 'Courier New', monospace;
-        }
-
-        .header {
-            background-color: var(--primary);
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 5px solid var(--secondary);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 1rem;
-            margin: 2rem 0;
-            background: #1a1a1a;
-            border: 2px solid var(--primary);
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .app-card {
-            background: #1a1a1a;
-            padding: 1.5rem;
-            border: 2px solid var(--primary);
-            border-radius: 5px;
-            transition: transform 0.3s;
-        }
-
-        .app-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .app-icon {
-            font-size: 2rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-
-        .app-title {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .app-category {
-            color: var(--primary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .download-btn {
-            background: var(--primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 1rem;
-        }
-
-        .category-filter, .subcategory-filter {
-            margin: 1rem 0;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .category-btn, .subcategory-btn {
-            background: #2a2a2a;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            cursor: pointer;
-        }
-
-        .category-btn.active, .subcategory-btn.active {
-            background: var(--primary);
-        }
-
-        .subcategory-dropdown {
-            display: none;
-            margin-top: 1rem;
-        }
-
-        .subcategory-dropdown.active {
-            display: flex;
-        }
-
-        .rating {
-            margin: 0.5rem 0;
-            color: var(--secondary);
-        }
-
-        .rating i {
-            color: var(--secondary);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pirating.xyz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8B0000;
+      --secondary: #FFD700;
+      --dark: #0a0a0a;
+      --light: #f4f4f4;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      font-family: 'Courier New', monospace;
+    }
+    
+    .header {
+      background-color: var(--primary);
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 5px solid var(--secondary);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .search-bar {
+      width: 100%;
+      padding: 1rem;
+      margin: 2rem 0;
+      background: #1a1a1a;
+      border: 2px solid var(--primary);
+      color: white;
+      font-size: 1.2rem;
+    }
+    
+    .category-filter {
+      margin: 1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .category-filter h3 {
+      width: 100%;
+    }
+    
+    .category-btn {
+      background: #2a2a2a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .category-btn.active {
+      background: var(--primary);
+    }
+    
+    /* Moved subcategory-dropdown inside the category-filter container */
+    .subcategory-dropdown {
+      display: none;
+      margin-top: 1rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    
+    .subcategory-dropdown.active {
+      display: flex;
+    }
+    
+    .subcategory-btn {
+      background: #2a2a2a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .subcategory-btn.active {
+      background: var(--primary);
+    }
+    
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .app-card {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+      transition: transform 0.3s;
+    }
+    
+    .app-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .app-icon {
+      font-size: 2rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+    
+    .app-title {
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .app-category {
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .download-btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    
+    .rating {
+      margin: 0.5rem 0;
+      color: var(--secondary);
+    }
+    
+    .rating i {
+      color: var(--secondary);
+    }
+  </style>
 </head>
 <body>
-    <header class="header">
-        <h1>pirating.xyz🏴‍☠️</h1>
-        <p>A constantly updating hub for all things piracy! Arrr!</p>
-    </header>
-
-    <div class="container">
-        <input type="text" class="search-bar" placeholder="Search fer booty...">
-
-        <!-- Separate Category and Subcategory Filters -->
-        <div class="category-filter">
-            <h3>Categories:</h3>
-            <button class="category-btn active" data-category="all">All</button>
-            <button class="category-btn" data-category="tutorials">Tutorials</button>
-            <button class="category-btn" data-category="movies">Movies + TV</button>
-            <button class="category-btn" data-category="anime">Anime</button>
-            <button class="category-btn" data-category="manga">Manga</button>
-            <button class="category-btn" data-category="windows-games">Windows Games</button>
-            <button class="category-btn" data-category="mac-games">Mac Games</button>
-            <button class="category-btn" data-category="ebooks">E-Books</button>
-            <button class="category-btn" data-category="audiobooks">Audiobooks</button>
-            <button class="category-btn" data-category="windows-apps">Windows Apps</button>
-            <button class="category-btn" data-category="mac-apps">Mac Apps</button>
-            <button class="category-btn" data-category="android">Android Apps and Games</button>
-            <button class="category-btn" data-category="ios">iOS Apps and Games</button>
-            <button class="category-btn" data-category="vpn">VPNs</button>
-            <button class="category-btn" data-category="other">Other</button>
-        </div>
-
-        <div class="subcategory-filter">
-            <h3>Subcategories:</h3>
-            <div class="subcategory-dropdown">
-                <!-- Placeholder for subcategory buttons -->
-            </div>
-        </div>
-
-        <div class="app-grid">
-            <div class="app-card" data-category="tutorials" data-subcategory="development">
-                <i class="app-icon fas fa-code"></i>
-                <h2 class="app-title">Web Development Bootcamp</h2>
-                <div class="app-category">Development</div>
-                <p>Learn HTML, CSS, JavaScript, and more!</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="https://example.com/webdev" class="download-btn">View Tutorial</a>
-            </div>
-
-            <div class="app-card" data-category="movies" data-subcategory="action">
-                <i class="app-icon fas fa-film"></i>
-                <h2 class="app-title">yuPPow</h2>
-                <div class="app-category">Action</div>
-                <p>Excellent website to stream movies and tv with 2 to 4 available server. Also an android app!</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="https://example.com/pirates" class="download-btn">Watch Now</a>
-            </div>
-
-            <div class="app-card" data-category="anime" data-subcategory="action">
-                <i class="app-icon fas fa-dragon"></i>
-                <h2 class="app-title">Naruto Shippuden</h2>
-                <div class="app-category">Action</div>
-                <p>Ninja battles and powerful jutsus</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="https://example.com/naruto" class="download-btn">Watch Episodes</a>
-            </div>
-
-            <!-- More templates for other categories with ratings... -->
-            <div class="app-card" data-category="vpn" data-subcategory="privacy">
-                <i class="app-icon fas fa-shield-alt"></i>
-                <h2 class="app-title">SecureNet VPN</h2>
-                <div class="app-category">VPN</div>
-                <p>Surf the web privately</p>
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="https://example.com/securenet" class="download-btn">Get VPN</a>
-            </div>
-        </div>
+  <header class="header">
+    <h1>pirating.xyz🏴‍☠️</h1>
+    <p>A constantly updating hub for all things piracy! Arrr!</p>
+  </header>
+  
+  <div class="container">
+    <input type="text" class="search-bar" placeholder="Search fer booty...">
+    
+    <!-- Category Filter with integrated Subcategory Dropdown -->
+    <div class="category-filter">
+      <h3>Categories:</h3>
+      <button class="category-btn active" data-category="all">All</button>
+      <button class="category-btn" data-category="tutorials">Tutorials</button>
+      <button class="category-btn" data-category="movies">Movies + TV</button>
+      <button class="category-btn" data-category="anime">Anime</button>
+      <button class="category-btn" data-category="manga">Manga</button>
+      <button class="category-btn" data-category="windows-games">Windows Games</button>
+      <button class="category-btn" data-category="mac-games">Mac Games</button>
+      <button class="category-btn" data-category="ebooks">E-Books</button>
+      <button class="category-btn" data-category="audiobooks">Audiobooks</button>
+      <button class="category-btn" data-category="windows-apps">Windows Apps</button>
+      <button class="category-btn" data-category="mac-apps">Mac Apps</button>
+      <button class="category-btn" data-category="android">Android Apps and Games</button>
+      <button class="category-btn" data-category="ios">iOS Apps and Games</button>
+      <button class="category-btn" data-category="vpn">VPNs</button>
+      <button class="category-btn" data-category="other">Other</button>
+      
+      <!-- Subcategory Dropdown now here -->
+      <div class="subcategory-dropdown">
+        <!-- Placeholder for subcategory buttons -->
+      </div>
     </div>
-
-    <script>
-        const searchBar = document.querySelector('.search-bar');
-        const appCards = document.querySelectorAll('.app-card');
-        const categoryBtns = document.querySelectorAll('.category-btn');
-        const subcategoryDropdown = document.querySelector('.subcategory-dropdown');
-
-        const subcategories = {
-            "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games"],
-            "movies": ["Ad Free", "Mutliple Servers", "Login", "+ Anime"],
-            "anime": ["Ad Free", "Multiple Servers", "Login", "MyAniList"],
-            "manga": ["Action", "Adventure", "Comedy", "Fantasy", "Sci-Fi", "Romance", "Slice of Life", "Drama", "Mystery", "Horror", "Sports", "Historical", "Isekai", "Shonen", "Shojo", "Seinen", "Josei", "Harem", "Ecchi", "Mecha", "Yaoi", "Yuri", "Gender Bender"],
-            "windows-games": ["Shooter", "RPG", "Strategy", "Action", "Adventure", "Simulation", "Puzzle", "Racing", "Sports", "Fighting", "Platformer", "Indie", "MMO", "Casual", "Educational", "Card", "Board", "Music", "Party"],
-            "mac-games": ["Shooter", "RPG", "Strategy", "Action", "Adventure", "Simulation", "Puzzle", "Racing", "Sports", "Fighting", "Platformer", "Indie", "MMO", "Casual", "Educational", "Card", "Board", "Music", "Party"],
-            "windows-apps": ["Productivity", "Entertainment", "Communication", "Utilities & Tools", "Education", "Graphics & Design", "Photo & Video", "Security", "Finance", "Health & Fitness", "Social", "News & Weather", "Books & Reference", "Developer Tools", "Accessibility", "Business"],
-            "mac-apps": ["Productivity", "Entertainment", "Communication", "Utilities & Tools", "Education", "Graphics & Design", "Photo & Video", "Security", "Finance", "Health & Fitness", "Social", "News & Weather", "Books & Reference", "Developer Tools", "Accessibility", "Business"],
-            "ebooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
-            "audiobooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
-            "android": ["Productivity", "Jailbreak", "Entertainment", "Games", "Communication", "Social", "Photography", "Video Players & Editors", "Music & Audio", "News & Magazines", "Travel & Local", "Maps & Navigation", "Weather", "Books & Reference", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Tools", "Personalization", "Libraries & Demo", "Medical", "Dating", "Parenting"],
-            "ios": ["Productivity", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools"],
-            "vpn": ["Privacy", "Streaming", "Security", "Bypassing Censorship", "Gaming", "Torrenting", "Remote Access", "Business Use", "Public Wi-Fi Protection", "Travel", "Data Encryption", "Anonymous Browsing", "Geo-Spoofing"]
-        };
-
-        function filterApps() {
-            const searchTerm = searchBar.value.toLowerCase();
-            const activeCategory = document.querySelector('.category-btn.active').dataset.category;
-            const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
-
-            appCards.forEach(card => {
-                const title = card.querySelector('.app-title').textContent.toLowerCase();
-                const desc = card.querySelector('p').textContent.toLowerCase();
-                const category = card.dataset.category;
-                const subcategory = card.dataset.subcategory;
-
-                const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
-                const matchesCategory = activeCategory === 'all' || category === activeCategory;
-                const matchesSubcategory = !activeSubcategory || subcategory === activeSubcategory;
-
-                card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
-            });
-        }
-
-        function updateSubcategories(category) {
-            subcategoryDropdown.innerHTML = '';
-            const subcats = subcategories[category] || [];
-            subcats.forEach(subcat => {
-                const btn = document.createElement('button');
-                btn.classList.add('subcategory-btn');
-                btn.dataset.subcategory = subcat.toLowerCase();
-                btn.textContent = subcat;
-                subcategoryDropdown.appendChild(btn);
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.subcategory-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    filterApps();
-                });
-            });
-            subcategoryDropdown.classList.toggle('active', subcats.length > 0);
-        }
-
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                updateSubcategories(btn.dataset.category);
-                filterApps();
-            });
+    
+    <div class="app-grid">
+      <div class="app-card" data-category="tutorials" data-subcategory="development">
+        <i class="app-icon fas fa-code"></i>
+        <h2 class="app-title">Web Development Bootcamp</h2>
+        <div class="app-category">Development</div>
+        <p>Learn HTML, CSS, JavaScript, and more!</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+        <a href="https://example.com/webdev" class="download-btn">View Tutorial</a>
+      </div>
+      
+      <div class="app-card" data-category="movies" data-subcategory="action">
+        <i class="app-icon fas fa-film"></i>
+        <h2 class="app-title">yuPPow</h2>
+        <div class="app-category">Action</div>
+        <p>Excellent website to stream movies and tv with 2 to 4 available server. Also an android app!</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+        <a href="https://example.com/pirates" class="download-btn">Watch Now</a>
+      </div>
+      
+      <div class="app-card" data-category="anime" data-subcategory="action">
+        <i class="app-icon fas fa-dragon"></i>
+        <h2 class="app-title">Naruto Shippuden</h2>
+        <div class="app-category">Action</div>
+        <p>Ninja battles and powerful jutsus</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+        <a href="https://example.com/naruto" class="download-btn">Watch Episodes</a>
+      </div>
+      
+      <div class="app-card" data-category="vpn" data-subcategory="privacy">
+        <i class="app-icon fas fa-shield-alt"></i>
+        <h2 class="app-title">SecureNet VPN</h2>
+        <div class="app-category">VPN</div>
+        <p>Surf the web privately</p>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+        <a href="https://example.com/securenet" class="download-btn">Get VPN</a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const searchBar = document.querySelector('.search-bar');
+    const appCards = document.querySelectorAll('.app-card');
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const subcategoryDropdown = document.querySelector('.subcategory-dropdown');
+    
+    const subcategories = {
+      "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games"],
+      "movies": ["Ad Free", "Mutliple Servers", "Login", "+ Anime"],
+      "anime": ["Ad Free", "Multiple Servers", "Login", "MyAniList"],
+      "manga": ["Action", "Adventure", "Comedy", "Fantasy", "Sci-Fi", "Romance", "Slice of Life", "Drama", "Mystery", "Horror", "Sports", "Historical", "Isekai", "Shonen", "Shojo", "Seinen", "Josei", "Harem", "Ecchi", "Mecha", "Yaoi", "Yuri", "Gender Bender"],
+      "windows-games": ["Shooter", "RPG", "Strategy", "Action", "Adventure", "Simulation", "Puzzle", "Racing", "Sports", "Fighting", "Platformer", "Indie", "MMO", "Casual", "Educational", "Card", "Board", "Music", "Party"],
+      "mac-games": ["Shooter", "RPG", "Strategy", "Action", "Adventure", "Simulation", "Puzzle", "Racing", "Sports", "Fighting", "Platformer", "Indie", "MMO", "Casual", "Educational", "Card", "Board", "Music", "Party"],
+      "windows-apps": ["Productivity", "Entertainment", "Communication", "Utilities & Tools", "Education", "Graphics & Design", "Photo & Video", "Security", "Finance", "Health & Fitness", "Social", "News & Weather", "Books & Reference", "Developer Tools", "Accessibility", "Business"],
+      "mac-apps": ["Productivity", "Entertainment", "Communication", "Utilities & Tools", "Education", "Graphics & Design", "Photo & Video", "Security", "Finance", "Health & Fitness", "Social", "News & Weather", "Books & Reference", "Developer Tools", "Accessibility", "Business"],
+      "ebooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
+      "audiobooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
+      "android": ["Productivity", "Jailbreak", "Entertainment", "Games", "Communication", "Social", "Photography", "Video Players & Editors", "Music & Audio", "News & Magazines", "Travel & Local", "Maps & Navigation", "Weather", "Books & Reference", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Tools", "Personalization", "Libraries & Demo", "Medical", "Dating", "Parenting"],
+      "ios": ["Productivity", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools"],
+      "vpn": ["Privacy", "Streaming", "Security", "Bypassing Censorship", "Gaming", "Torrenting", "Remote Access", "Business Use", "Public Wi-Fi Protection", "Travel", "Data Encryption", "Anonymous Browsing", "Geo-Spoofing"]
+    };
+    
+    function filterApps() {
+      const searchTerm = searchBar.value.toLowerCase();
+      const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+      const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
+      
+      appCards.forEach(card => {
+        const title = card.querySelector('.app-title').textContent.toLowerCase();
+        const desc = card.querySelector('p').textContent.toLowerCase();
+        const category = card.dataset.category;
+        const subcategory = card.dataset.subcategory;
+        
+        const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+        const matchesSubcategory = !activeSubcategory || subcategory === activeSubcategory;
+        
+        card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
+      });
+    }
+    
+    function updateSubcategories(category) {
+      subcategoryDropdown.innerHTML = '';
+      const subcats = subcategories[category] || [];
+      subcats.forEach(subcat => {
+        const btn = document.createElement('button');
+        btn.classList.add('subcategory-btn');
+        btn.dataset.subcategory = subcat.toLowerCase();
+        btn.textContent = subcat;
+        subcategoryDropdown.appendChild(btn);
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.subcategory-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filterApps();
         });
-
-        searchBar.addEventListener('input', filterApps);
-    </script>
+      });
+      subcategoryDropdown.classList.toggle('active', subcats.length > 0);
+    }
+    
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateSubcategories(btn.dataset.category);
+        filterApps();
+      });
+    });
+    
+    searchBar.addEventListener('input', filterApps);
+  </script>
 </body>
 </html>
