@@ -224,15 +224,19 @@
         const subcategoryDropdown = document.querySelector('.subcategory-dropdown');
 
         const subcategories = {
-            "tutorials": ["Development", "Design", "Marketing"],
-            "movies": ["Action", "Drama", "Comedy"],
-            "anime": ["Action", "Romance", "Fantasy"],
-            "windows-games": ["Shooter", "RPG", "Strategy"],
-            "mac-games": ["Adventure", "Puzzle"],
-            "ebooks": ["Fiction", "Non-Fiction", "Science"],
-            "audiobooks": ["Mystery", "Thriller", "Biography"],
-            "vpn": ["Privacy", "Streaming", "Security"],
-            // Add subcategories for other categories as needed
+            "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games"],
+            "movies": ["Ad Free", "Mutliple Servers", "Login", "+ Anime"],
+            "anime": ["Ad Free", "Multiple Servers", "Login", "MyAniList"],
+            "manga": ["Action", "Adventure", "Comedy", "Fantasy", "Sci-Fi", "Romance", "Slice of Life", "Drama", "Mystery", "Horror", "Sports", "Historical", "Isekai", "Shonen", "Shojo", "Seinen", "Josei", "Harem", "Ecchi", "Mecha", "Yaoi", "Yuri", "Gender Bender"],
+            "windows-games": ["Shooter", "RPG", "Strategy", "Action", "Adventure", "Simulation", "Puzzle", "Racing", "Sports", "Fighting", "Platformer", "Indie", "MMO", "Casual", "Educational", "Card", "Board", "Music", "Party"],
+            "mac-games": ["Shooter", "RPG", "Strategy", "Action", "Adventure", "Simulation", "Puzzle", "Racing", "Sports", "Fighting", "Platformer", "Indie", "MMO", "Casual", "Educational", "Card", "Board", "Music", "Party"],
+            "windows-apps": ["Productivity", "Entertainment", "Communication", "Utilities & Tools", "Education", "Graphics & Design", "Photo & Video", "Security", "Finance", "Health & Fitness", "Social", "News & Weather", "Books & Reference", "Developer Tools", "Accessibility", "Business"],
+            "mac-apps": ["Productivity", "Entertainment", "Communication", "Utilities & Tools", "Education", "Graphics & Design", "Photo & Video", "Security", "Finance", "Health & Fitness", "Social", "News & Weather", "Books & Reference", "Developer Tools", "Accessibility", "Business"],
+            "ebooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
+            "audiobooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
+            "android": ["Productivity", "Jailbreak", "Entertainment", "Games", "Communication", "Social", "Photography", "Video Players & Editors", "Music & Audio", "News & Magazines", "Travel & Local", "Maps & Navigation", "Weather", "Books & Reference", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Tools", "Personalization", "Libraries & Demo", "Medical", "Dating", "Parenting"],
+            "ios": ["Productivity", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools"],
+            "vpn": ["Privacy", "Streaming", "Security", "Bypassing Censorship", "Gaming", "Torrenting", "Remote Access", "Business Use", "Public Wi-Fi Protection", "Travel", "Data Encryption", "Anonymous Browsing", "Geo-Spoofing"]
         };
 
         function filterApps() {
