@@ -285,10 +285,16 @@
         const category = card.dataset.category;
         const subcategories = card.dataset.subcategories.split(',').map(subcat => subcat.trim().toLowerCase());
 
+        // Check if the card title or description matches the search term
         const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+
+        // Check if the card matches the active category
         const matchesCategory = activeCategory === 'all' || category === activeCategory;
+
+        // Check if the card matches the active subcategory
         const matchesSubcategory = !activeSubcategory || subcategories.includes(activeSubcategory.toLowerCase());
 
+        // Apply the filter condition: card should match search, category, and subcategory
         card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
     });
 }
