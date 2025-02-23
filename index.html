@@ -94,14 +94,14 @@
             margin-top: 1rem;
         }
 
-        .category-filter {
+        .category-filter, .subcategory-filter {
             margin: 1rem 0;
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
         }
 
-        .category-btn {
+        .category-btn, .subcategory-btn {
             background: #2a2a2a;
             color: white;
             padding: 0.5rem 1rem;
@@ -109,8 +109,17 @@
             cursor: pointer;
         }
 
-        .category-btn.active {
+        .category-btn.active, .subcategory-btn.active {
             background: var(--primary);
+        }
+
+        .subcategory-dropdown {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .subcategory-dropdown.active {
+            display: flex;
         }
     </style>
 </head>
@@ -125,67 +134,147 @@
 
         <div class="category-filter">
             <button class="category-btn active" data-category="all">All</button>
-            <button class="category-btn" data-category="apps">Apps</button>
-            <button class="category-btn" data-category="tools">Tools</button>
-            <button class="category-btn" data-category="media">Media</button>
+            <button class="category-btn" data-category="tutorials">Tutorials</button>
+            <button class="category-btn" data-category="movies">Movies + TV</button>
+            <button class="category-btn" data-category="anime">Anime</button>
+            <button class="category-btn" data-category="manga">Manga</button>
+            <button class="category-btn" data-category="windows-games">Windows Games</button>
+            <button class="category-btn" data-category="mac-games">Mac Games</button>
+            <button class="category-btn" data-category="ebooks">E-Books</button>
+            <button class="category-btn" data-category="audiobooks">Audiobooks</button>
+            <button class="category-btn" data-category="windows-apps">Windows Apps</button>
+            <button class="category-btn" data-category="mac-apps">Mac Apps</button>
+            <button class="category-btn" data-category="android">Android Apps and Games</button>
+            <button class="category-btn" data-category="ios">iOS Apps and Games</button>
+            <button class="category-btn" data-category="vpn">VPNs</button>
+            <button class="category-btn" data-category="other">Other</button>
+        </div>
+
+        <div class="subcategory-dropdown">
+            <!-- Placeholder for subcategory buttons -->
         </div>
 
         <div class="app-grid">
-            <!-- App Cards -->
-            <div class="app-card" data-category="apps">
-                <i class="app-icon fas fa-skull-crossbones"></i>
-                <h2 class="app-title">Torrent Client X</h2>
-                <div class="app-category">Apps</div>
-                <p>The finest torrent client on the seven seas</p>
-                <a href="#" class="download-btn">Download</a>
+            <!-- Templates for Tutorials -->
+            <div class="app-card" data-category="tutorials" data-subcategory="development">
+                <i class="app-icon fas fa-code"></i>
+                <h2 class="app-title">Web Development Bootcamp</h2>
+                <div class="app-category">Development</div>
+                <p>Learn HTML, CSS, JavaScript, and more!</p>
+                <a href="https://example.com/webdev" class="download-btn">View Tutorial</a>
+            </div>
+            <div class="app-card" data-category="tutorials" data-subcategory="design">
+                <i class="app-icon fas fa-paint-brush"></i>
+                <h2 class="app-title">Photoshop Masterclass</h2>
+                <div class="app-category">Design</div>
+                <p>Become a pro with Adobe Photoshop</p>
+                <a href="https://example.com/photoshop" class="download-btn">Start Learning</a>
             </div>
 
-            <div class="app-card" data-category="tools">
-                <i class="app-icon fas fa-anchor"></i>
-                <h2 class="app-title">VPN Master</h2>
-                <div class="app-category">Tools</div>
-                <p>Keep yer sails hidden from navy eyes</p>
-                <a href="#" class="download-btn">Get Protection</a>
-            </div>
-
-            <div class="app-card" data-category="media">
+            <!-- Templates for Movies + TV -->
+            <div class="app-card" data-category="movies" data-subcategory="action">
                 <i class="app-icon fas fa-film"></i>
-                <h2 class="app-title">Movie Haven</h2>
-                <div class="app-category">Media</div>
-                <p>Latest movies straight from the captain's quarters</p>
-                <a href="#" class="download-btn">Enter</a>
+                <h2 class="app-title">Pirates of the Caribbean</h2>
+                <div class="app-category">Action</div>
+                <p>Classic swashbuckling adventure</p>
+                <a href="https://example.com/pirates" class="download-btn">Watch Now</a>
+            </div>
+            <div class="app-card" data-category="movies" data-subcategory="drama">
+                <i class="app-icon fas fa-video"></i>
+                <h2 class="app-title">The Godfather</h2>
+                <div class="app-category">Drama</div>
+                <p>An iconic mafia film</p>
+                <a href="https://example.com/godfather" class="download-btn">Stream Here</a>
             </div>
 
-            <!-- Add more app cards as needed -->
+            <!-- Templates for Anime -->
+            <div class="app-card" data-category="anime" data-subcategory="action">
+                <i class="app-icon fas fa-dragon"></i>
+                <h2 class="app-title">Naruto Shippuden</h2>
+                <div class="app-category">Action</div>
+                <p>Ninja battles and powerful jutsus</p>
+                <a href="https://example.com/naruto" class="download-btn">Watch Episodes</a>
+            </div>
+
+            <!-- More templates for other categories... -->
+            <div class="app-card" data-category="ebooks" data-subcategory="fiction">
+                <i class="app-icon fas fa-book"></i>
+                <h2 class="app-title">The Hobbit</h2>
+                <div class="app-category">Fiction</div>
+                <p>An epic journey in Middle-Earth</p>
+                <a href="https://example.com/hobbit" class="download-btn">Download E-Book</a>
+            </div>
+
+            <div class="app-card" data-category="vpn" data-subcategory="privacy">
+                <i class="app-icon fas fa-shield-alt"></i>
+                <h2 class="app-title">SecureNet VPN</h2>
+                <div class="app-category">VPN</div>
+                <p>Surf the web privately</p>
+                <a href="https://example.com/securenet" class="download-btn">Get VPN</a>
+            </div>
         </div>
     </div>
 
     <script>
-        // Filter functionality
         const searchBar = document.querySelector('.search-bar');
         const appCards = document.querySelectorAll('.app-card');
         const categoryBtns = document.querySelectorAll('.category-btn');
+        const subcategoryDropdown = document.querySelector('.subcategory-dropdown');
+
+        const subcategories = {
+            "tutorials": ["Development", "Design", "Marketing"],
+            "movies": ["Action", "Drama", "Comedy"],
+            "anime": ["Action", "Romance", "Fantasy"],
+            "windows-games": ["Shooter", "RPG", "Strategy"],
+            "mac-games": ["Adventure", "Puzzle"],
+            "ebooks": ["Fiction", "Non-Fiction", "Science"],
+            "audiobooks": ["Mystery", "Thriller", "Biography"],
+            "vpn": ["Privacy", "Streaming", "Security"],
+            // Add subcategories for other categories as needed
+        };
 
         function filterApps() {
             const searchTerm = searchBar.value.toLowerCase();
             const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+            const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
 
             appCards.forEach(card => {
                 const title = card.querySelector('.app-title').textContent.toLowerCase();
                 const desc = card.querySelector('p').textContent.toLowerCase();
                 const category = card.dataset.category;
+                const subcategory = card.dataset.subcategory;
 
                 const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
                 const matchesCategory = activeCategory === 'all' || category === activeCategory;
+                const matchesSubcategory = !activeSubcategory || subcategory === activeSubcategory;
 
-                card.style.display = (matchesSearch && matchesCategory) ? 'block' : 'none';
+                card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
             });
+        }
+
+        function updateSubcategories(category) {
+            subcategoryDropdown.innerHTML = '';
+            const subcats = subcategories[category] || [];
+            subcats.forEach(subcat => {
+                const btn = document.createElement('button');
+                btn.classList.add('subcategory-btn');
+                btn.dataset.subcategory = subcat.toLowerCase();
+                btn.textContent = subcat;
+                subcategoryDropdown.appendChild(btn);
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.subcategory-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterApps();
+                });
+            });
+            subcategoryDropdown.classList.toggle('active', subcats.length > 0);
         }
 
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 categoryBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+                updateSubcategories(btn.dataset.category);
                 filterApps();
             });
         });
