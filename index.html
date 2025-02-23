@@ -121,6 +121,15 @@
         .subcategory-dropdown.active {
             display: flex;
         }
+
+        .rating {
+            margin: 0.5rem 0;
+            color: var(--secondary);
+        }
+
+        .rating i {
+            color: var(--secondary);
+        }
     </style>
 </head>
 <body>
@@ -132,7 +141,9 @@
     <div class="container">
         <input type="text" class="search-bar" placeholder="Search fer booty...">
 
+        <!-- Separate Category and Subcategory Filters -->
         <div class="category-filter">
+            <h3>Categories:</h3>
             <button class="category-btn active" data-category="all">All</button>
             <button class="category-btn" data-category="tutorials">Tutorials</button>
             <button class="category-btn" data-category="movies">Movies + TV</button>
@@ -150,66 +161,57 @@
             <button class="category-btn" data-category="other">Other</button>
         </div>
 
-        <div class="subcategory-dropdown">
-            <!-- Placeholder for subcategory buttons -->
+        <div class="subcategory-filter">
+            <h3>Subcategories:</h3>
+            <div class="subcategory-dropdown">
+                <!-- Placeholder for subcategory buttons -->
+            </div>
         </div>
 
         <div class="app-grid">
-            <!-- Templates for Tutorials -->
+            <!-- Templates with Star Ratings -->
             <div class="app-card" data-category="tutorials" data-subcategory="development">
                 <i class="app-icon fas fa-code"></i>
                 <h2 class="app-title">Web Development Bootcamp</h2>
                 <div class="app-category">Development</div>
                 <p>Learn HTML, CSS, JavaScript, and more!</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
                 <a href="https://example.com/webdev" class="download-btn">View Tutorial</a>
             </div>
-            <div class="app-card" data-category="tutorials" data-subcategory="design">
-                <i class="app-icon fas fa-paint-brush"></i>
-                <h2 class="app-title">Photoshop Masterclass</h2>
-                <div class="app-category">Design</div>
-                <p>Become a pro with Adobe Photoshop</p>
-                <a href="https://example.com/photoshop" class="download-btn">Start Learning</a>
-            </div>
 
-            <!-- Templates for Movies + TV -->
             <div class="app-card" data-category="movies" data-subcategory="action">
                 <i class="app-icon fas fa-film"></i>
                 <h2 class="app-title">Pirates of the Caribbean</h2>
                 <div class="app-category">Action</div>
                 <p>Classic swashbuckling adventure</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
                 <a href="https://example.com/pirates" class="download-btn">Watch Now</a>
             </div>
-            <div class="app-card" data-category="movies" data-subcategory="drama">
-                <i class="app-icon fas fa-video"></i>
-                <h2 class="app-title">The Godfather</h2>
-                <div class="app-category">Drama</div>
-                <p>An iconic mafia film</p>
-                <a href="https://example.com/godfather" class="download-btn">Stream Here</a>
-            </div>
 
-            <!-- Templates for Anime -->
             <div class="app-card" data-category="anime" data-subcategory="action">
                 <i class="app-icon fas fa-dragon"></i>
                 <h2 class="app-title">Naruto Shippuden</h2>
                 <div class="app-category">Action</div>
                 <p>Ninja battles and powerful jutsus</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
                 <a href="https://example.com/naruto" class="download-btn">Watch Episodes</a>
             </div>
 
-            <!-- More templates for other categories... -->
-            <div class="app-card" data-category="ebooks" data-subcategory="fiction">
-                <i class="app-icon fas fa-book"></i>
-                <h2 class="app-title">The Hobbit</h2>
-                <div class="app-category">Fiction</div>
-                <p>An epic journey in Middle-Earth</p>
-                <a href="https://example.com/hobbit" class="download-btn">Download E-Book</a>
-            </div>
-
+            <!-- More templates for other categories with ratings... -->
             <div class="app-card" data-category="vpn" data-subcategory="privacy">
                 <i class="app-icon fas fa-shield-alt"></i>
                 <h2 class="app-title">SecureNet VPN</h2>
                 <div class="app-category">VPN</div>
                 <p>Surf the web privately</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
                 <a href="https://example.com/securenet" class="download-btn">Get VPN</a>
             </div>
         </div>
