@@ -205,7 +205,7 @@
         <a href="https://example.com/webdev" class="download-btn">View Tutorial</a>
       </div>
       
-      <div class="app-card" data-category="movies" data-subcategories="Multiple Servers", "Login">
+      <div class="app-card" data-category="movies" data-subcategories="Multiple Servers, Login">
         <i class="app-icon fas fa-film"></i>
         <h2 class="app-title">yuPPow</h2>
         <div class="app-category">Multiple Servers, Login</div>
@@ -245,28 +245,25 @@
     };
     
     function filterApps() {
-    const searchTerm = searchBar.value.toLowerCase();
-    const activeCategory = document.querySelector('.category-btn.active').dataset.category;
-    const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
+  const searchTerm = searchBar.value.toLowerCase();
+  const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+  const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
 
-    appCards.forEach(card => {
-        const title = card.querySelector('.app-title').textContent.toLowerCase();
-        const desc = card.querySelector('p').textContent.toLowerCase();
-        const category = card.dataset.category;
-        const subcategories = card.dataset.subcategories.split(',').map(subcat => subcat.trim().toLowerCase());
+  appCards.forEach(card => {
+    const title = card.querySelector('.app-title').textContent.toLowerCase();
+    const desc = card.querySelector('p').textContent.toLowerCase();
+    const category = card.dataset.category;
+    // Use a safe check to get subcategories (if undefined, use an empty array)
+    const cardSubcats = card.dataset.subcategories
+      ? card.dataset.subcategories.split(',').map(subcat => subcat.trim().toLowerCase())
+      : [];
 
-        // Check if the card title or description matches the search term
-        const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+    const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+    const matchesCategory = activeCategory === 'all' || category === activeCategory;
+    const matchesSubcategory = !activeSubcategory || cardSubcats.includes(activeSubcategory.toLowerCase());
 
-        // Check if the card matches the active category
-        const matchesCategory = activeCategory === 'all' || category === activeCategory;
-
-        // Check if the card matches the active subcategory
-        const matchesSubcategory = !activeSubcategory || subcategories.includes(activeSubcategory.toLowerCase());
-
-        // Apply the filter condition: card should match search, category, and subcategory
-        card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
-    });
+    card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
+  });
 }
     
     function updateSubcategories(category) {
