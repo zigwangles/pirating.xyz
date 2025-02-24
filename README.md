@@ -1,4 +1,4 @@
-# 🏴‍☠️ Piracy.xyz
+# 🏴‍☠️ Piracy.xyz - https://discord.gg/kdTrTkhjgE
 
 Welcome to **Piracy.xyz**, a community-driven website for discovering and sharing digital content treasures! Whether you’re looking for tutorials, software, games, movies, or media, Piracy.xyz is your one-stop destination for finding all kinds of digital loot.
 
