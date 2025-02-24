@@ -7,147 +7,142 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root {
-      --primary: #8B0000;
-      --secondary: #FFD700;
-      --dark: #0a0a0a;
-      --light: #f4f4f4;
+      --primary: #FF6347; /* Sleek red-orange */
+      --secondary: #FFD700; /* Gold for contrast */
+      --dark: #1c1c1c; /* Softer dark */
+      --light: #f9f9f9; /* Lighter background */
     }
-    
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       background-color: var(--dark);
       color: var(--light);
-      font-family: 'Courier New', monospace;
+      font-family: 'Segoe UI', sans-serif; /* Cleaner, modern font */
+      line-height: 1.6;
     }
-    
+
     .header {
       background-color: var(--primary);
       padding: 2rem;
       text-align: center;
-      border-bottom: 5px solid var(--secondary);
+      border-bottom: 3px solid var(--secondary);
+      color: white;
     }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
-    
+
     .search-bar {
       width: 100%;
       padding: 1rem;
       margin: 2rem 0;
-      background: #1a1a1a;
+      background: #2e2e2e;
       border: 2px solid var(--primary);
+      border-radius: 5px;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+      transition: background 0.3s ease;
     }
-    
+
+    .search-bar:focus {
+      background: #444;
+    }
+
     .category-filter {
       margin: 1rem 0;
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      align-items: center;
+      justify-content: center;
     }
-    
-    .category-filter h3 {
-      width: 100%;
-    }
-    
+
     .category-btn {
-      background: #2a2a2a;
+      background: var(--dark);
       color: white;
-      padding: 0.5rem 1rem;
-      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      border: 1px solid var(--primary);
       cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
-    
+
     .category-btn.active {
       background: var(--primary);
-    }
-    
-    /* Moved subcategory-dropdown inside the category-filter container */
-    .subcategory-dropdown {
-      display: none;
-      margin-top: 1rem;
-      gap: 1rem;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-    
-    .subcategory-dropdown.active {
-      display: flex;
-    }
-    
-    .subcategory-btn {
-      background: #2a2a2a;
       color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      cursor: pointer;
+      transform: translateY(-3px);
     }
-    
-    .subcategory-btn.active {
+
+    .category-btn:hover {
       background: var(--primary);
+      color: white;
     }
-    
+
     .app-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
-    
+
     .app-card {
-      background: #1a1a1a;
+      background: #2a2a2a;
       padding: 1.5rem;
-      border: 2px solid var(--primary);
-      border-radius: 5px;
-      transition: transform 0.3s;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    
+
     .app-card:hover {
-      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+      border-color: var(--primary);
     }
-    
+
     .app-icon {
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: var(--secondary);
       margin-bottom: 1rem;
     }
-    
+
     .app-title {
       color: var(--secondary);
+      font-size: 1.4rem;
       margin-bottom: 0.5rem;
     }
-    
+
     .app-category {
       color: var(--primary);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       margin-bottom: 1rem;
     }
-    
+
     .download-btn {
       background: var(--primary);
       color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      cursor: pointer;
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
       text-decoration: none;
-      display: inline-block;
-      margin-top: 1rem;
+      transition: background 0.3s ease;
     }
-    
+
+    .download-btn:hover {
+      background: var(--secondary);
+      color: var(--dark);
+    }
+
     .rating {
       margin: 0.5rem 0;
       color: var(--secondary);
     }
-    
+
     .rating i {
       color: var(--secondary);
     }
