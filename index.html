@@ -31,6 +31,64 @@
       line-height: 1.6;
     }
 
+    /* Light mode styles */
+    body.light-mode {
+      background-color: #F0F0F0;
+      color: #171717;
+    }
+
+    body.light-mode .header {
+      background-color: #E0E0E0;
+      border-bottom: 1px solid #CCCCCC;
+    }
+
+    body.light-mode .site-title {
+      background: linear-gradient(90deg, #FF4757, #5352ED);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    body.light-mode .app-card {
+      background: #E0E0E0;
+    }
+
+    body.light-mode .card-header {
+      border-bottom: 1px solid #CCCCCC;
+    }
+
+    body.light-mode .app-icon {
+      background: #CCCCCC;
+    }
+
+    body.light-mode .app-category {
+      background: #CCCCCC;
+    }
+
+    body.light-mode .search-bar {
+      background: #E0E0E0;
+      color: #171717;
+    }
+
+    body.light-mode .search-bar:focus {
+      background: #D0D0D0;
+    }
+
+    body.light-mode .filter-btn {
+      color: #171717;
+      border: 1px solid #CCCCCC;
+    }
+
+    body.light-mode .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #F0F0F0;
+    }
+
+    body.light-mode .filter-btn:hover:not(.active) {
+      background: #D0D0D0;
+    }
+
     .header {
       background-color: var(--darker);
       padding: 2rem 1rem;
@@ -250,7 +308,6 @@
       background: var(--gray);
     }
 
-    /* Dark mode toggle */
     .dark-mode-toggle {
       position: absolute;
       top: 1rem;
@@ -604,17 +661,210 @@
           </div>
         </div>
       </div>
+
+      <!-- iOS - Odyssey -->
+      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-unlock"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Odyssey</h2>
+            <span class="app-category">Jailbreak</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">Odyssey is a jailbreak tool for iOS devices that allows users to customize and enhance their iPhones by installing third-party apps, tweaks, and themes not available through the official App Store.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://cdn1.realmzer.xyz//Odyssey_1_4_3-HY.ipa" class="action-btn">
+              <i class="fas fa-download"></i> Download IPA
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- iOS - unc0ver -->
+      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-unlock"></i>
+          </div>
+          <div>
+            <h2 class="app-title">unc0ver</h2>
+            <span class="app-category">Jailbreak</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">unc0ver is a jailbreak tool for iOS devices that enables users to unlock their system to install unauthorized apps, tweaks, and themes, offering greater customization and control over their iPhones.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://cdn1.realmzer.xyz//unc0ver_Release_8_0_2-sI.ipa" class="action-btn">
+              <i class="fas fa-download"></i> Download IPA
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- iOS - Def1nit3lyN0tAJa1lbr3akTool -->
+      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-unlock"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Def1nit3lyN0tAJa1lbr3akTool</h2>
+            <span class="app-category">Jailbreak</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">A jailbreak tool for all arm64 devices on iOS 16.0 to iOS 16.6.1.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://cdn1.realmzer.xyz//Def1nit3ly_N0t_A_Ja1lbr3ak_Tool-lT.ipa" class="action-btn">
+              <i class="fas fa-download"></i> Download IPA
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- iOS - NekoJB -->
+      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-unlock"></i>
+          </div>
+          <div>
+            <h2 class="app-title">NekoJB</h2>
+            <span class="app-category">Jailbreak</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">NekoJB is a jailbreak tool for iOS devices, designed to enable users to bypass Apple’s restrictions and gain access to advanced customizations, system tweaks, and third-party apps.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://cdn1.realmzer.xyz//nekojb_0_1_0_beta5-gy.ipa" class="action-btn">
+              <i class="fas fa-download"></i> Download IPA
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- iOS - Telegram IPA Sources -->
+      <div class="app-card" data-category="ios" data-subcategories="Telegram">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fab fa-telegram-plane"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Telegram IPA Sources</h2>
+            <span class="app-category">Telegram</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">Sultan Mods, Blatant's iPA Library, binnichtaktiv's iPA Library</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="card-actions">
+            <a href="ios/TelegramIPASources.html" class="action-btn">
+              <i class="fas fa-link"></i> View Sources
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- iOS - IOS Repo List -->
+      <div class="app-card" data-category="ios" data-subcategories="Repos">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-server"></i>
+          </div>
+          <div>
+            <h2 class="app-title">IOS Repo List</h2>
+            <span class="app-category">Repos</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">Repo List for Signer Apps</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="card-actions">
+            <a href="ios/RepoList.html" class="action-btn">
+              <i class="fas fa-link"></i> View Repos
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movies - Free Movies & TV Megathread -->
+      <div class="app-card" data-category="movies" data-subcategories="Websites">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-film"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Free Movies & TV Megathread</h2>
+            <span class="app-category">Websites</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">Reddit Megathread - Movies & TV Piracy</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://www.reddit.com/r/Piracy/wiki/megathread/movies_and_tv/" class="action-btn">
+              <i class="fas fa-link"></i> View Megathread
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   
   <script>
-    // Search and filtering functionality
     const searchBar = document.querySelector('.search-bar');
     const appCards = document.querySelectorAll('.app-card');
-    const categoryBtns = document.querySelectorAll('.filter-btn');
+    const categoryBtns = document.querySelectorAll('.category-filter .filter-btn');
     const subcategoryFilter = document.querySelector('.subcategory-filter');
-    
-    // Define subcategories for each main category
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+
     const subcategories = {
       "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games", "Legal"],
       "movies": ["Ad Free", "Multiple Servers", "Websites", "Login", "+ Anime"],
@@ -627,14 +877,14 @@
       "ebooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
       "audiobooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
       "android": ["Productivity", "Jailbreak", "Entertainment", "Games", "Communication", "Social", "Photography", "Video Players & Editors", "Music & Audio", "News & Magazines", "Travel & Local", "Maps & Navigation", "Weather", "Books & Reference", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Tools", "Personalization", "Libraries & Demo", "Medical", "Dating", "Parenting"],
-      "ios": ["Productivity", "Repos", "Telegram", "Repos", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools"],
+      "ios": ["Productivity", "Repos", "Telegram", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools"],
       "vpn": ["Privacy", "Streaming", "Security", "Bypassing Censorship", "Gaming", "Torrenting", "Remote Access", "Business Use", "Public Wi-Fi Protection", "Travel", "Data Encryption", "Anonymous Browsing", "Geo-Spoofing"]
     };
     
-    // Filter app cards based on search, category, and subcategory
     function filterApps() {
-      const searchTerm = searchBar.value.toLowerCase();
-      const activeCategory = document.querySelector('.filter-btn.active').dataset.category;
+      if (!appCards.length) return;
+      const searchTerm = searchBar ? searchBar.value.toLowerCase() : '';
+      const activeCategory = document.querySelector('.category-filter .filter-btn.active')?.dataset.category || 'all';
       const activeSubcategory = document.querySelector('.subcategory-filter .filter-btn.active')?.dataset.subcategory;
       
       appCards.forEach(card => {
@@ -653,11 +903,10 @@
       });
     }
     
-    // Update subcategory buttons based on selected main category
     function updateSubcategories(category) {
+      if (!subcategoryFilter) return;
       subcategoryFilter.innerHTML = '';
       
-      // Add "All" subcategory button
       const allBtn = document.createElement('button');
       allBtn.classList.add('filter-btn', 'active');
       allBtn.textContent = 'All';
@@ -671,7 +920,6 @@
         filterApps();
       });
       
-      // Add subcategory buttons
       const subcats = subcategories[category] || [];
       subcats.forEach(subcat => {
         const btn = document.createElement('button');
@@ -690,17 +938,31 @@
       });
     }
     
-    // Set up event listeners
-    categoryBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        categoryBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        updateSubcategories(btn.dataset.category);
-        filterApps();
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        const icon = darkModeToggle.querySelector('i');
+        icon.classList.toggle('fa-moon');
+        icon.classList.toggle('fa-sun');
       });
-    });
+    }
+
+    if (categoryBtns.length) {
+      categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          categoryBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          updateSubcategories(btn.dataset.category);
+          filterApps();
+        });
+      });
+    }
     
-    searchBar.addEventListener('input', filterApps);
+    if (searchBar && appCards.length) {
+      searchBar.addEventListener('input', filterApps);
+    }
+
+    updateSubcategories('all');
   </script>
 </body>
 </html>
