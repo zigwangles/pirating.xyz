@@ -7,83 +7,132 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root {
-      --primary: #FF6347; /* Sleek red-orange */
-      --secondary: #FFD700; /* Gold for contrast */
-      --dark: #1c1c1c; /* Softer dark */
-      --light: #f9f9f9; /* Lighter background */
-      --boldred: #B53737
+      --primary: #FF4757;
+      --secondary: #5352ED;
+      --accent: #FFDD59;
+      --dark: #171717;
+      --darker: #111111;
+      --gray: #333333;
+      --light-gray: #444444;
+      --text: #F0F0F0;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      transition: all 0.2s ease;
     }
 
     body {
       background-color: var(--dark);
-      color: var(--light);
-      font-family: 'Segoe UI', sans-serif; /* Cleaner, modern font */
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
     }
 
     .header {
-      background-color: var(--boldred);
-      padding: 2rem;
+      background-color: var(--darker);
+      padding: 2rem 1rem;
       text-align: center;
-      border-bottom: 3px solid var(--secondary);
-      color: white;
+      position: relative;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .site-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .site-description {
+      font-size: 1rem;
+      font-weight: 400;
+      opacity: 0.8;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 1.5rem;
+    }
+
+    .search-container {
+      margin: 1.5rem 0;
+      position: relative;
     }
 
     .search-bar {
       width: 100%;
-      padding: 1rem;
-      margin: 2rem 0;
-      background: #2e2e2e;
-      border: 2px solid var(--primary);
-      border-radius: 5px;
-      color: white;
-      font-size: 1.1rem;
-      transition: background 0.3s ease;
+      padding: 1rem 1.5rem;
+      background: var(--gray);
+      border: none;
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
     }
 
     .search-bar:focus {
-      background: #444;
+      background: var(--light-gray);
+      box-shadow: 0 0 0 2px var(--primary);
     }
 
-    .category-filter {
-      margin: 1rem 0;
+    .search-icon {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text);
+      opacity: 0.6;
+    }
+
+    .filter-section {
+      margin: 2rem 0;
+    }
+
+    .filter-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+      opacity: 0.7;
+    }
+
+    .category-filter, .subcategory-filter {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
     }
 
-    .category-btn {
-      background: var(--dark);
-      color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 5px;
-      border: 1px solid var(--primary);
+    .filter-btn {
+      background: transparent;
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--gray);
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
     }
 
-    .category-btn.active {
+    .filter-btn.active {
       background: var(--primary);
-      color: white;
-      transform: translateY(-3px);
+      border-color: var(--primary);
+      color: var(--text);
+      font-weight: 500;
     }
 
-    .category-btn:hover {
-      background: var(--primary);
-      color: white;
+    .filter-btn:hover:not(.active) {
+      background: var(--gray);
+      border-color: var(--gray);
     }
 
     .app-grid {
@@ -94,362 +143,478 @@
     }
 
     .app-card {
-      background: #2a2a2a;
-      padding: 1.5rem;
-      border-radius: 8px;
-      border: 2px solid transparent;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      background: var(--gray);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .app-card:hover {
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid var(--light-gray);
     }
 
     .app-icon {
-      font-size: 2.5rem;
-      color: var(--secondary);
-      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: var(--accent);
+      padding: 0.8rem;
+      background: var(--darker);
+      border-radius: 10px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .app-title {
-      color: var(--secondary);
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
     }
 
     .app-category {
-      color: var(--primary);
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-    }
-
-    .download-btn {
-      background: var(--primary);
-      color: white;
-      padding: 0.5rem 1.2rem;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      background: var(--darker);
+      padding: 0.2rem 0.5rem;
       border-radius: 4px;
-      text-decoration: none;
-      transition: background 0.3s ease;
+      display: inline-block;
     }
 
-    .download-btn:hover {
-      background: var(--secondary);
-      color: var(--dark);
+    .card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-description {
+      margin-bottom: 1rem;
+      opacity: 0.9;
+      font-size: 0.95rem;
     }
 
     .rating {
-      margin: 0.5rem 0;
-      color: var(--secondary);
+      margin: 1rem 0;
+      color: var(--accent);
+      font-size: 0.9rem;
     }
 
-    .rating i {
-      color: var(--secondary);
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: var(--primary);
+      color: var(--text);
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      flex: 1;
+      min-width: 100px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn:hover {
+      background: var(--secondary);
+    }
+
+    .action-btn.secondary {
+      background: var(--light-gray);
+    }
+
+    .action-btn.secondary:hover {
+      background: var(--gray);
+    }
+
+    /* Dark mode toggle */
+    .dark-mode-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .dark-mode-toggle:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .app-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .card-actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
   <header class="header">
-    <h1>pirating.xyz🏴‍☠️</h1>
-    <p>A constantly updating hub for all things piracy! Arrr!</p>
+    <button class="dark-mode-toggle">
+      <i class="fas fa-moon"></i>
+    </button>
+    <h1 class="site-title">pirating.xyz</h1>
+    <p class="site-description">A modern hub for digital resources 🏴‍☠️</p>
   </header>
   
   <div class="container">
-    <input type="text" class="search-bar" placeholder="Search for key words...">
-    
-    <!-- Category Filter with integrated Subcategory Dropdown -->
-    <div class="category-filter">
-      <h3>Categories:</h3>
-      <button class="category-btn active" data-category="all">All</button>
-      <button class="category-btn" data-category="tutorials">Tutorials</button>
-      <button class="category-btn" data-category="movies">Movies + TV</button>
-      <button class="category-btn" data-category="anime">Anime</button>
-      <button class="category-btn" data-category="manga">Manga</button>
-      <button class="category-btn" data-category="windows-games">Windows Games</button>
-      <button class="category-btn" data-category="mac-games">Mac Games</button>
-      <button class="category-btn" data-category="ebooks">E-Books</button>
-      <button class="category-btn" data-category="audiobooks">Audiobooks</button>
-      <button class="category-btn" data-category="windows-apps">Windows Apps</button>
-      <button class="category-btn" data-category="mac-apps">Mac Apps</button>
-      <button class="category-btn" data-category="android">Android Apps and Games</button>
-      <button class="category-btn" data-category="ios">iOS Apps and Games</button>
-      <button class="category-btn" data-category="vpn">VPNs</button>
-      <button class="category-btn" data-category="other">Other</button>
-      
-      <!-- Subcategory Dropdown now here -->
-<div class="subcategory-filter">
-    <h3>Subcategories:</h3>
-    <div class="subcategory-dropdown">
-        <!-- Placeholder for subcategory buttons -->
+    <div class="search-container">
+      <input type="text" class="search-bar" placeholder="Search for resources...">
+      <span class="search-icon"><i class="fas fa-search"></i></span>
     </div>
-</div>
+    
+    <div class="filter-section">
+      <h3 class="filter-title">Categories</h3>
+      <div class="category-filter">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="tutorials">Tutorials</button>
+        <button class="filter-btn" data-category="movies">Movies + TV</button>
+        <button class="filter-btn" data-category="anime">Anime</button>
+        <button class="filter-btn" data-category="manga">Manga</button>
+        <button class="filter-btn" data-category="windows-games">Windows Games</button>
+        <button class="filter-btn" data-category="mac-games">Mac Games</button>
+        <button class="filter-btn" data-category="ebooks">E-Books</button>
+        <button class="filter-btn" data-category="audiobooks">Audiobooks</button>
+        <button class="filter-btn" data-category="windows-apps">Windows Apps</button>
+        <button class="filter-btn" data-category="mac-apps">Mac Apps</button>
+        <button class="filter-btn" data-category="android">Android</button>
+        <button class="filter-btn" data-category="ios">iOS</button>
+        <button class="filter-btn" data-category="vpn">VPNs</button>
+        <button class="filter-btn" data-category="other">Other</button>
+      </div>
+      
+      <h3 class="filter-title">Subcategories</h3>
+      <div class="subcategory-filter">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
     
     <div class="app-grid">
+      <!-- Steam Games Tutorial -->
       <div class="app-card" data-category="tutorials" data-subcategories="Cracking">
-        <i class="app-icon fas fa-code"></i>
-        <h2 class="app-title">How to Crack Steam Games</h2>
-        <div class="app-category">Cracking</div>
-        <p>How to crack and pirate the steam games in your library.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Steam Games Cracking</h2>
+            <span class="app-category">Cracking</span>
+          </div>
         </div>
-        <a href="tutorials/piratingsteamgames.html" class="download-btn">View Tutorial</a>
+        <div class="card-body">
+          <p class="app-description">How to crack and pirate the steam games in your library.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="tutorials/piratingsteamgames.html" class="action-btn">
+              <i class="fas fa-book-open"></i> View Tutorial
+            </a>
+          </div>
+        </div>
       </div>
       
-      <div class="app-grid">
+      <!-- Office Installation -->
       <div class="app-card" data-category="tutorials" data-subcategories="Cracking">
-        <i class="app-icon fas fa-code"></i>
-        <h2 class="app-title">Windows Office Installation and Setup</h2>
-        <div class="app-category">Cracking</div>
-        <p>How to install and set up a pirated version of Microsoft Office.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-file-word"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Microsoft Office Setup</h2>
+            <span class="app-category">Cracking</span>
+          </div>
         </div>
-        <a href="tutorials/officeinstallation.html" class="download-btn">View Tutorial</a>
+        <div class="card-body">
+          <p class="app-description">How to install and set up a pirated version of Microsoft Office.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="tutorials/officeinstallation.html" class="action-btn">
+              <i class="fas fa-book-open"></i> View Tutorial
+            </a>
+          </div>
+        </div>
       </div>
       
-      <div class="app-grid">
+      <!-- Copyright Infringement -->
       <div class="app-card" data-category="tutorials" data-subcategories="Legal">
-        <i class="app-icon fas fa-code"></i>
-        <h2 class="app-title">Copyright Infringement Complaints</h2>
-        <div class="app-category">Legal</div>
-        <p>What to do about copyright infringment.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-gavel"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Copyright Issues</h2>
+            <span class="app-category">Legal</span>
+          </div>
         </div>
-        <a href="tutorials/copyrightinfringement.html" class="download-btn">View Tutorial</a>
+        <div class="card-body">
+          <p class="app-description">What to do about copyright infringement complaints.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="tutorials/copyrightinfringement.html" class="action-btn">
+              <i class="fas fa-book-open"></i> View Tutorial
+            </a>
+          </div>
+        </div>
       </div>
       
+      <!-- Movies - yuPPow -->
       <div class="app-card" data-category="movies" data-subcategories="Multiple Servers, Login">
-        <i class="app-icon fas fa-film"></i>
-        <h2 class="app-title">yuPPow</h2>
-        <div class="app-category">Multiple Servers, Login</div>
-        <p>Excellent website to stream movies and tv with 2 to 4 available server. Also an android app!</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-film"></i>
+          </div>
+          <div>
+            <h2 class="app-title">yuPPow</h2>
+            <span class="app-category">Movies & TV</span>
+          </div>
         </div>
-        <a href="https://yuppow.com" class="download-btn">Watch Here</a>
+        <div class="card-body">
+          <p class="app-description">Excellent website to stream movies and TV with 2 to 4 available servers. Also has an Android app!</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://yuppow.com" class="action-btn">
+              <i class="fas fa-play"></i> Watch Here
+            </a>
+          </div>
+        </div>
       </div>
       
+      <!-- Anime - KickAssAnime -->
       <div class="app-card" data-category="anime" data-subcategories="Multiple Servers, Login">
-        <i class="app-icon fas fa-play"></i>
-        <h2 class="app-title">KickAssAnime</h2>
-        <div class="app-category">Multiple Servers, Login</div>
-        <p>KAA has multiple servers and the fastest buffer times imo. They have many mirror sites so they will never get fully taken down.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-play"></i>
+          </div>
+          <div>
+            <h2 class="app-title">KickAssAnime</h2>
+            <span class="app-category">Anime</span>
+          </div>
         </div>
-        <a href="anime/kaa-sources.html" class="download-btn">Watch Here</a>
-        <a href="https://discord.gg/M4bWDds9fs" class="download-btn">KAA Discord</a>
+        <div class="card-body">
+          <p class="app-description">KAA has multiple servers and the fastest buffer times. They have many mirror sites so they will never get fully taken down.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="anime/kaa-sources.html" class="action-btn">
+              <i class="fas fa-play"></i> Watch Here
+            </a>
+            <a href="https://discord.gg/M4bWDds9fs" class="action-btn secondary">
+              <i class="fab fa-discord"></i> Join Discord
+            </a>
+          </div>
+        </div>
       </div>
 
-       <div class="app-card" data-category="windows-games" data-subcategories="RPG, Fantasy, Adventure">
-        <i class="app-icon fas fa-gamepad"></i>
-        <h2 class="app-title">Elden Ring</h2>
-        <div class="app-category">RPG, Fantasy, Adventure</div>
-        <p>Elden Ring is an open-world action RPG by FromSoftware, featuring a vast, mysterious land called the Lands Between, deep lore crafted by George R.R. Martin, and challenging Souls-like combat.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+      <!-- Games - Elden Ring -->
+      <div class="app-card" data-category="windows-games" data-subcategories="RPG, Fantasy, Adventure">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Elden Ring</h2>
+            <span class="app-category">RPG</span>
+          </div>
         </div>
-        <a href="windows-games/eldenring.html" class="download-btn">Download Here</a>
+        <div class="card-body">
+          <p class="app-description">Open-world action RPG by FromSoftware, featuring a vast, mysterious land called the Lands Between, with lore crafted by George R.R. Martin.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="windows-games/eldenring.html" class="action-btn">
+              <i class="fas fa-download"></i> Download
+            </a>
+          </div>
+        </div>
       </div>
 
+      <!-- Games - Firewatch -->
       <div class="app-card" data-category="windows-games" data-subcategories="Puzzle, Indie, Casual">
-        <i class="app-icon fas fa-gamepad"></i>
-        <h2 class="app-title">Firewatch</h2>
-        <div class="app-category">Puzzle, Indie, Casual</div>
-        <p>Firewatch is a narrative-driven adventure game where you play as a fire lookout in the Wyoming wilderness, uncovering a mysterious story through exploration and dialogue.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-mountain"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Firewatch</h2>
+            <span class="app-category">Indie</span>
+          </div>
         </div>
-        <a href="windows-games/firewatch.html" class="download-btn">Download Here</a>
+        <div class="card-body">
+          <p class="app-description">Narrative-driven adventure game where you play as a fire lookout in the Wyoming wilderness, uncovering a mysterious story.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="windows-games/firewatch.html" class="action-btn">
+              <i class="fas fa-download"></i> Download
+            </a>
+          </div>
+        </div>
       </div>
       
+      <!-- Audiobooks - American Psycho -->
       <div class="app-card" data-category="audiobooks" data-subcategories="Horror, Fiction, Thriller">
-        <i class="app-icon fas fa-headphones"></i>
-        <h2 class="app-title">American Psycho</h2>
-        <div class="app-category">Horror, Fiction, Thriller</div>
-        <p>American Psycho is a dark satirical novel by Bret Easton Ellis that follows the life of Patrick Bateman, a wealthy, narcissistic Wall Street investment banker who leads a double life as a violent serial killer.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-headphones"></i>
+          </div>
+          <div>
+            <h2 class="app-title">American Psycho</h2>
+            <span class="app-category">Thriller</span>
+          </div>
         </div>
-        <a href="https://audiobookbay.lu/downld0?downfs=93Bret_Easton_Ellis___American_Psycho" class="download-btn">Torrent</a>
-        <a href="magnet:?xt=urn:btih:608cad40b5bc4456103c23dc6cc26a0dd573d379&dn=American%20Psycho%20-%20Bret%20Easton%20Ellis&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969&tr=udp%3a%2f%2ftracker.leechers-paradise.org%3a6969&tr=udp%3a%2f%2ftracker.torrent.eu.org%3a451%2fannounce&tr=udp%3a%2f%2ftracker.open-internet.nl%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a69691337%2fannounce&tr=udp%3a%2f%2ftracker.vanitycore.co%3a6969%2fannounce&tr=http%3a%2f%2ftracker.baravik.org%3a6970%2fannounce&tr=http%3a%2f%2fretracker.telecom.by%3a80%2fannounce&tr=http%3a%2f%2ftracker.vanitycore.co%3a6969%2fannounce" class="download-btn">Magnet</a>
+        <div class="card-body">
+          <p class="app-description">Dark satirical novel by Bret Easton Ellis following Patrick Bateman, a wealthy Wall Street banker leading a double life as a serial killer.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://audiobookbay.lu/downld0?downfs=93Bret_Easton_Ellis___American_Psycho" class="action-btn">
+              <i class="fas fa-download"></i> Torrent
+            </a>
+            <a href="magnet:?xt=urn:btih:608cad40b5bc4456103c23dc6cc26a0dd573d379&dn=American%20Psycho%20-%20Bret%20Easton%20Ellis&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969&tr=udp%3a%2f%2ftracker.leechers-paradise.org%3a6969&tr=udp%3a%2f%2ftracker.torrent.eu.org%3a451%2fannounce&tr=udp%3a%2f%2ftracker.open-internet.nl%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a69691337%2fannounce&tr=udp%3a%2f%2ftracker.vanitycore.co%3a6969%2fannounce&tr=http%3a%2f%2ftracker.baravik.org%3a6970%2fannounce&tr=http%3a%2f%2fretracker.telecom.by%3a80%2fannounce&tr=http%3a%2f%2ftracker.vanitycore.co%3a6969%2fannounce" class="action-btn secondary">
+              <i class="fas fa-magnet"></i> Magnet
+            </a>
+          </div>
+        </div>
       </div>
       
+      <!-- iOS - LiveContainer -->
       <div class="app-card" data-category="ios" data-subcategories="Utilities, Developer Tools">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">LiveContainer</h2>
-        <div class="app-category">Utilities, Developer Tools</div>
-        <p>Run iOS app without actually installing it!</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-cube"></i>
+          </div>
+          <div>
+            <h2 class="app-title">LiveContainer</h2>
+            <span class="app-category">Utilities</span>
+          </div>
         </div>
-        <a href="https://cdn1.realmzer.xyz//com_kdt_livecontainer_3_2_0-zQ.ipa" class="download-btn">Download Here</a>
+        <div class="card-body">
+          <p class="app-description">Run iOS apps without actually installing them!</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://cdn1.realmzer.xyz//com_kdt_livecontainer_3_2_0-zQ.ipa" class="action-btn">
+              <i class="fas fa-download"></i> Download IPA
+            </a>
+          </div>
+        </div>
       </div>
       
+      <!-- iOS - Taurine -->
       <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">Taurine</h2>
-        <div class="app-category">Utilities, Developer Tools</div>
-        <p>Taurine is a jailbreak tool for iOS devices, enabling users to unlock and customize their iPhones by installing tweaks, themes, and third-party apps not available on the App Store.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fas fa-unlock"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Taurine</h2>
+            <span class="app-category">Jailbreak</span>
+          </div>
         </div>
-        <a href="https://cdn1.realmzer.xyz//Taurine_1_1_7_3-jL.ipa" class="download-btn">Download Here</a>
-      </div>
-      
-      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">Odyssey</h2>
-        <div class="app-category">Utilities, Developer Tools</div>
-        <p>Odyssey is a jailbreak tool for iOS devices that allows users to customize and enhance their iPhones by installing third-party apps, tweaks, and themes not available through the official App Store.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
+        <div class="card-body">
+          <p class="app-description">Jailbreak tool for iOS devices, enabling customization by installing tweaks, themes, and apps not on the App Store.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <div class="card-actions">
+            <a href="https://cdn1.realmzer.xyz//Taurine_1_1_7_3-jL.ipa" class="action-btn">
+              <i class="fas fa-download"></i> Download IPA
+            </a>
+          </div>
         </div>
-        <a href="https://cdn1.realmzer.xyz//Odyssey_1_4_3-HY.ipa" class="download-btn">Download Here</a>
-      </div>
-      
-      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">unc0ver</h2>
-        <div class="app-category">Utilities, Developer Tools</div>
-        <p>unc0ver is a jailbreak tool for iOS devices that enables users to unlock their system to install unauthorized apps, tweaks, and themes, offering greater customization and control over their iPhones.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-        </div>
-        <a href="https://cdn1.realmzer.xyz//unc0ver_Release_8_0_2-sI.ipa" class="download-btn">Download Here</a>
-      </div>
-      
-      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">Def1nit3lyN0tAJa1lbr3akTool</h2>
-        <div class="app-category">Utilities, Developer Tools</div>
-        <p>A jailbreak tool for all arm64 devices on iOS 16.0 to iOS 16.6.1. A jailbreak tool for iOS 16.0 to iOS 16.6.1.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <a href="https://cdn1.realmzer.xyz//Def1nit3ly_N0t_A_Ja1lbr3ak_Tool-lT.ipa" class="download-btn">Download Here</a>
-      </div>
-      
-      <div class="app-card" data-category="ios" data-subcategories="Utilities, Jailbreak, Developer Tools">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">NekoJB</h2>
-        <div class="app-category">Utilities, Developer Tools</div>
-        <p>NekoJB is a jailbreak tool for iOS devices, designed to enable users to bypass Apple’s restrictions and gain access to advanced customizations, system tweaks, and third-party apps.</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <a href="https://cdn1.realmzer.xyz//nekojb_0_1_0_beta5-gy.ipa" class="download-btn">Download Here</a>
-      </div>
-
-      <div class="app-card" data-category="ios" data-subcategories="Telegram">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">Telegram IPA Sources</h2>
-        <div class="app-category">Telegram</div>
-        <p>Sultan Mods, Blatant's iPA Library, binnichtaktiv's iPA Library</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-        </div>
-      <a href="ios/TelegramIPASources.html" class="download-btn">View Sources</a>
-      </div>
-
-      <div class="app-card" data-category="ios" data-subcategories="Repos">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">IOS Repo List</h2>
-        <div class="app-category">Repos</div>
-        <p>Repo List for Signer Apps</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-        </div>
-      <a href="ios/RepoList.html" class="download-btn">View Repos</a>
-      </div>
-
-      <div class="app-card" data-category="movies" data-subcategories="Websites">
-        <i class="app-icon fas fa-mobile"></i>
-        <h2 class="app-title">Free Movies & TV Megathread</h2>
-        <div class="app-category">Websites</div>
-        <p>Reddit Megathread - Movies & TV Piracy</p>
-        <div class="rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-      <a href="https://www.reddit.com/r/Piracy/wiki/megathread/movies_and_tv/" class="download-btn">View Megathread</a>
       </div>
     </div>
   </div>
   
   <script>
+    // Search and filtering functionality
     const searchBar = document.querySelector('.search-bar');
     const appCards = document.querySelectorAll('.app-card');
-    const categoryBtns = document.querySelectorAll('.category-btn');
-    const subcategoryDropdown = document.querySelector('.subcategory-dropdown');
+    const categoryBtns = document.querySelectorAll('.filter-btn');
+    const subcategoryFilter = document.querySelector('.subcategory-filter');
     
+    // Define subcategories for each main category
     const subcategories = {
       "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games", "Legal"],
       "movies": ["Ad Free", "Multiple Servers", "Websites", "Login", "+ Anime"],
@@ -466,46 +631,66 @@
       "vpn": ["Privacy", "Streaming", "Security", "Bypassing Censorship", "Gaming", "Torrenting", "Remote Access", "Business Use", "Public Wi-Fi Protection", "Travel", "Data Encryption", "Anonymous Browsing", "Geo-Spoofing"]
     };
     
+    // Filter app cards based on search, category, and subcategory
     function filterApps() {
-  const searchTerm = searchBar.value.toLowerCase();
-  const activeCategory = document.querySelector('.category-btn.active').dataset.category;
-  const activeSubcategory = document.querySelector('.subcategory-btn.active')?.dataset.subcategory;
-
-  appCards.forEach(card => {
-    const title = card.querySelector('.app-title').textContent.toLowerCase();
-    const desc = card.querySelector('p').textContent.toLowerCase();
-    const category = card.dataset.category;
-    // Use a safe check to get subcategories (if undefined, use an empty array)
-    const cardSubcats = card.dataset.subcategories
-      ? card.dataset.subcategories.split(',').map(subcat => subcat.trim().toLowerCase())
-      : [];
-
-    const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
-    const matchesCategory = activeCategory === 'all' || category === activeCategory;
-    const matchesSubcategory = !activeSubcategory || cardSubcats.includes(activeSubcategory.toLowerCase());
-
-    card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'block' : 'none';
-  });
-}
+      const searchTerm = searchBar.value.toLowerCase();
+      const activeCategory = document.querySelector('.filter-btn.active').dataset.category;
+      const activeSubcategory = document.querySelector('.subcategory-filter .filter-btn.active')?.dataset.subcategory;
+      
+      appCards.forEach(card => {
+        const title = card.querySelector('.app-title').textContent.toLowerCase();
+        const desc = card.querySelector('.app-description').textContent.toLowerCase();
+        const category = card.dataset.category;
+        const cardSubcats = card.dataset.subcategories
+          ? card.dataset.subcategories.split(',').map(subcat => subcat.trim().toLowerCase())
+          : [];
+        
+        const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+        const matchesSubcategory = !activeSubcategory || cardSubcats.includes(activeSubcategory.toLowerCase());
+        
+        card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'flex' : 'none';
+      });
+    }
     
+    // Update subcategory buttons based on selected main category
     function updateSubcategories(category) {
-      subcategoryDropdown.innerHTML = '';
+      subcategoryFilter.innerHTML = '';
+      
+      // Add "All" subcategory button
+      const allBtn = document.createElement('button');
+      allBtn.classList.add('filter-btn', 'active');
+      allBtn.textContent = 'All';
+      subcategoryFilter.appendChild(allBtn);
+      
+      allBtn.addEventListener('click', () => {
+        document.querySelectorAll('.subcategory-filter .filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        allBtn.classList.add('active');
+        filterApps();
+      });
+      
+      // Add subcategory buttons
       const subcats = subcategories[category] || [];
       subcats.forEach(subcat => {
         const btn = document.createElement('button');
-        btn.classList.add('subcategory-btn');
-        btn.dataset.subcategory = subcat.toLowerCase();
+        btn.classList.add('filter-btn');
+        btn.dataset.subcategory = subcat;
         btn.textContent = subcat;
-        subcategoryDropdown.appendChild(btn);
+        subcategoryFilter.appendChild(btn);
+        
         btn.addEventListener('click', () => {
-          document.querySelectorAll('.subcategory-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.subcategory-filter .filter-btn').forEach(b => {
+            b.classList.remove('active');
+          });
           btn.classList.add('active');
           filterApps();
         });
       });
-      subcategoryDropdown.classList.toggle('active', subcats.length > 0);
     }
     
+    // Set up event listeners
     categoryBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         categoryBtns.forEach(b => b.classList.remove('active'));
