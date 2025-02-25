@@ -7,117 +7,391 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root {
-      --primary-color: #1e1e1e;
-      --secondary-color: #f1f1f1;
-      --highlight-color: #ff6347;
+      --primary: #FF4757;
+      --secondary: #5352ED;
+      --accent: #FFDD59;
+      --dark: #171717;
+      --darker: #111111;
+      --gray: #333333;
+      --light-gray: #444444;
+      --text: #F0F0F0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: var(--primary-color);
-      padding: 20px;
-      text-align: center;
-      border-bottom: 2px solid var(--highlight-color);
-    }
-
-    header h1 {
-      font-size: 2em;
-      color: var(--highlight-color);
-    }
-
-    main {
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .step {
-      background-color: #333;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-left: 5px solid var(--highlight-color);
-    }
-
-    .step h2 {
-      color: var(--highlight-color);
-      font-size: 1.5em;
-    }
-
-    .step p {
-      font-size: 1.1em;
+      background-color: var(--dark);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
     }
 
-    .step ul {
-      padding-left: 20px;
-      list-style: disc;
+    body.light-mode {
+      background-color: #F0F0F0;
+      color: #171717;
     }
 
-    .step ol {
-      padding-left: 20px;
-      list-style: decimal;
+    body.light-mode .header {
+      background-color: #E0E0E0;
+      border-bottom: 1px solid #CCCCCC;
     }
 
-    .important {
-      font-weight: bold;
-      color: #ffcc00;
+    body.light-mode .site-title {
+      background: linear-gradient(90deg, #FF4757, #5352ED);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    footer {
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
-      padding: 10px;
+    body.light-mode .app-card {
+      background: #E0E0E0;
+    }
+
+    body.light-mode .card-header {
+      border-bottom: 1px solid #CCCCCC;
+    }
+
+    body.light-mode .app-icon {
+      background: #CCCCCC;
+    }
+
+    body.light-mode .app-category {
+      background: #CCCCCC;
+    }
+
+    body.light-mode .action-btn {
+      color: #F0F0F0;
+    }
+
+    body.light-mode .action-btn:hover {
+      color: #171717;
+    }
+
+    body.light-mode .link-list li a {
+      color: #171717; /* Links turn black in light mode */
+    }
+
+    .header {
+      background-color: var(--darker);
+      padding: 2rem 1rem;
       text-align: center;
-      font-size: 0.9em;
+      position: relative;
+      border-bottom: 1px solid var(--gray);
     }
 
-    a {
-      color: var(--highlight-color);
+    .site-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .site-description {
+      font-size: 1rem;
+      font-weight: 400;
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    .app-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      justify-content: center; /* Center the cards horizontally */
+    }
+
+    .app-card {
+      background: var(--gray);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      width: calc(33.33% - 1rem); /* Three cards side-by-side with gap */
+      min-width: 280px; /* Minimum width for smaller screens */
+      height: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .app-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .app-icon {
+      font-size: 1.5rem;
+      color: var(--accent);
+      padding: 0.8rem;
+      background: var(--darker);
+      border-radius: 10px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .app-category {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      background: var(--darker);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-description {
+      margin-bottom: 1rem;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    .link-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+
+    .link-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-list li a {
+      color: var(--text);
       text-decoration: none;
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: var(--primary);
+      color: var(--text);
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn:hover {
+      background: var(--secondary);
+    }
+
+    .action-btn.copy-btn {
+      background: var(--light-gray);
+      min-width: 80px;
+    }
+
+    .action-btn.copy-btn:hover {
+      background: var(--gray);
+    }
+
+    .dark-mode-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .dark-mode-toggle:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .app-grid {
+        flex-direction: column; /* Stack cards vertically on small screens */
+        align-items: center;
+      }
+      .app-card {
+        width: 100%; /* Full width on small screens */
+        max-width: 500px; /* Optional: limit max width */
+      }
+      .card-actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>IPA Sources (Telegram) - pirating.xyz</h1>
+  <header class="header">
+    <button class="dark-mode-toggle">
+      <i class="fas fa-moon"></i>
+    </button>
+    <h1 class="site-title">IPA Sources (Telegram) - pirating.xyz</h1>
+    <p class="site-description">A modern hub for digital resources 🏴‍☠️</p>
   </header>
+  
+  <div class="container">
+    <div class="app-grid">
+      <!-- Sultan Mods - Apps for iOS -->
+      <div class="app-card">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fab fa-telegram-plane"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Sultan Mods - Apps for iOS</h2>
+            <span class="app-category">Telegram</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">Consistently updated, lots of apps/cracks, and have a really good certificate service, ethsign (has probably the most entitlements out of all the services out there).</p>
+          <ul class="link-list">
+            <li>
+              <a href="https://t.me/SultanModsiOS">https://t.me/SultanModsiOS</a>
+              <button class="action-btn copy-btn" data-link="https://t.me/SultanModsiOS">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-  <main>
-    <section class="step">
-      <h2>Sultan Mods - Apps for IOS by Sultan Mods Team</h2>
-      <p>Consistently updated, lots of apps/cracks, and have a really good certificate service, ethsign (has probably the most entitlements out of all the services out there).</p>
-      <a href="https://t.me/SultanModsiOS">Telegram Link</a>
-    </section>
+      <!-- Blatant's IPA Library -->
+      <div class="app-card">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fab fa-telegram-plane"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Blatant's IPA Library</h2>
+            <span class="app-category">Telegram</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">Consistently updated and has tons of apps/cracks, as well as crack requests.</p>
+          <ul class="link-list">
+            <li>
+              <a href="https://t.me/blatants">https://t.me/blatants</a>
+              <button class="action-btn copy-btn" data-link="https://t.me/blatants">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-    <section class="step">
-      <h2>Blatant's IPA Library - Tweaked iPAs updated automatically</h2>
-      <p>Consistently updated and has tons of apps/cracks, as well as crack requests.</p>
-      <a href="https://t.me/blatants">Telegram Link</a>
-    </section>
+      <!-- Binnichtaktiv's IPA Library -->
+      <div class="app-card">
+        <div class="card-header">
+          <div class="app-icon">
+            <i class="fab fa-telegram-plane"></i>
+          </div>
+          <div>
+            <h2 class="app-title">Binnichtaktiv's IPA Library</h2>
+            <span class="app-category">Telegram</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="app-description">Good source for cracked apps. Also has "App Hacks Requests."</p>
+          <ul class="link-list">
+            <li>
+              <a href="https://t.me/binnichtaktivsipas/">https://t.me/binnichtaktivsipas/</a>
+              <button class="action-btn copy-btn" data-link="https://t.me/binnichtaktivsipas/">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+    const copyButtons = document.querySelectorAll('.copy-btn');
 
-    <section class="step">
-      <h2>Binnichtaktiv's IPA Library</h2>
-      <p>Good source for cracked apps. Also has "App Hacks Requests."</p>
-      <a href="https://t.me/binnichtaktivsipas/">Telegram Link</a>
-    </section>
-  </main>
+    // Dark mode toggle functionality
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        const icon = darkModeToggle.querySelector('i');
+        icon.classList.toggle('fa-moon');
+        icon.classList.toggle('fa-sun');
+      });
+    }
 
-  <footer>
-    <p>&copy; 2025 pirating.xyz | All Rights Reserved</p>
-  </footer>
-
+    // Copy button functionality
+    copyButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const link = btn.getAttribute('data-link');
+        navigator.clipboard.writeText(link).then(() => {
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy:', err);
+          btn.innerHTML = '<i class="fas fa-times"></i> Error';
+          setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+          }, 2000);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
