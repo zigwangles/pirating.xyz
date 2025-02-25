@@ -3,84 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KAA Sources</title>
+  <title>KAA Sources - piracy.xyz</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root {
-      --primary-color: #1e1e1e;
-      --secondary-color: #f1f1f1;
-      --highlight-color: #ff6347;
+      --primary: #FF4757;
+      --secondary: #5352ED;
+      --accent: #FFDD59;
+      --dark: #171717;
+      --darker: #111111;
+      --gray: #333333;
+      --light-gray: #444444;
+      --text: #F0F0F0;
     }
-    
-    body {
-      font-family: Arial, sans-serif;
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
+
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
     }
 
-    header {
-      background-color: var(--primary-color);
-      padding: 20px;
+    body {
+      background-color: var(--dark);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+    }
+
+    .header {
+      background-color: var(--darker);
+      padding: 2rem 1rem;
       text-align: center;
-      border-bottom: 2px solid var(--highlight-color);
+      border-bottom: 1px solid var(--gray);
     }
 
-    header h1 {
-      font-size: 2em;
-      color: var(--highlight-color);
+    .site-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
     }
 
     main {
-      padding: 20px;
-      max-width: 1200px;
+      padding: 2rem;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
     .step {
-      background-color: #333;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-left: 5px solid var(--highlight-color);
+      background-color: var(--gray);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 5px solid var(--primary);
     }
 
     .step h2 {
-      color: var(--highlight-color);
-      font-size: 1.5em;
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
     }
 
     .step p {
-      font-size: 1.1em;
+      font-size: 1.1rem;
       line-height: 1.6;
-    }
-
-    .step ul {
-      padding-left: 20px;
-      list-style: disc;
+      margin-bottom: 1rem;
     }
 
     .step ol {
-      padding-left: 20px;
+      padding-left: 1.5rem;
       list-style: decimal;
+    }
+
+    .step ol li {
+      margin-bottom: 0.8rem;
     }
 
     .important {
       font-weight: bold;
-      color: #ffcc00;
+      color: var(--accent);
     }
 
     footer {
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
-      padding: 10px;
+      background-color: var(--darker);
+      color: var(--text);
+      padding: 1rem;
       text-align: center;
-      font-size: 0.9em;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--gray);
     }
 
     a {
-      color: var(--highlight-color);
+      color: var(--secondary);
       text-decoration: none;
     }
 
@@ -91,23 +111,24 @@
 </head>
 <body>
 
-  <header>
-    <h1>KickAssAnime Source List - piracy.xyz</h1>
+  <header class="header">
+    <h1 class="site-title">KickAssAnime Source List</h1>
   </header>
 
   <main>
     <section class="step">
       <h2>KAA Sources</h2>
-      <p>KickAssAnime has many mirrors of their main anime streaming service so if one gets taken down people can stil watch anime.</p>
+      <p>KickAssAnime has many mirrors of their main anime streaming service, so if one gets taken down, people can still watch anime.</p>
       <ol>
-        <li>kickassanimes.info <a href="https://kickassanimes.info">Main Hub</a>.</li>
-        <li>kaa.mx <a href="https://kaa.mx">Mirror 1</a>.</li>
-        <li>kickassanimes.io <a href="https://kickassanimes.io">Mirror 2</a>.</li>
-        <li>kaa.si <a href="https://kaa.si">Mirror 3</a>.</li>
-        <li>kickassanime.lol <a href="https://kickassanime.lol">Mirror 4</a>.</li>
-        <li>kickassanime.rs <a href="https://kickassanime.rs">Mirror 5</a>.</li>
+        <li><a href="https://kickassanimes.info">kickassanimes.info - Main Hub</a></li>
+        <li><a href="https://kaa.mx">kaa.mx - Mirror 1</a></li>
+        <li><a href="https://kickassanimes.io">kickassanimes.io - Mirror 2</a></li>
+        <li><a href="https://kaa.si">kaa.si - Mirror 3</a></li>
+        <li><a href="https://kickassanime.lol">kickassanime.lol - Mirror 4</a></li>
+        <li><a href="https://kickassanime.rs">kickassanime.rs - Mirror 5</a></li>
       </ol>
     </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 piracy.xyz | All Rights Reserved</p>
