@@ -3,84 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Cracking Tutorial</title>
+  <title>Game Cracking Tutorial - pirating.xyz</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root {
-      --primary-color: #1e1e1e;
-      --secondary-color: #f1f1f1;
-      --highlight-color: #ff6347;
+      --primary: #FF4757;
+      --secondary: #5352ED;
+      --accent: #FFDD59;
+      --dark: #171717;
+      --darker: #111111;
+      --gray: #333333;
+      --light-gray: #444444;
+      --text: #F0F0F0;
     }
-    
-    body {
-      font-family: Arial, sans-serif;
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
+
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
     }
 
-    header {
-      background-color: var(--primary-color);
-      padding: 20px;
+    body {
+      background-color: var(--dark);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+    }
+
+    .header {
+      background-color: var(--darker);
+      padding: 2rem 1rem;
       text-align: center;
-      border-bottom: 2px solid var(--highlight-color);
+      border-bottom: 1px solid var(--gray);
     }
 
-    header h1 {
-      font-size: 2em;
-      color: var(--highlight-color);
+    .site-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
     }
 
     main {
-      padding: 20px;
-      max-width: 1200px;
+      padding: 2rem;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
     .step {
-      background-color: #333;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-left: 5px solid var(--highlight-color);
+      background-color: var(--gray);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 5px solid var(--primary);
     }
 
     .step h2 {
-      color: var(--highlight-color);
-      font-size: 1.5em;
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
     }
 
     .step p {
-      font-size: 1.1em;
+      font-size: 1.1rem;
       line-height: 1.6;
+      margin-bottom: 1rem;
     }
 
-    .step ul {
-      padding-left: 20px;
-      list-style: disc;
+    .step ol, .step ul {
+      padding-left: 1.5rem;
     }
 
-    .step ol {
-      padding-left: 20px;
-      list-style: decimal;
+    .step ol li, .step ul li {
+      margin-bottom: 0.8rem;
     }
 
     .important {
       font-weight: bold;
-      color: #ffcc00;
+      color: var(--accent);
     }
 
     footer {
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
-      padding: 10px;
+      background-color: var(--darker);
+      color: var(--text);
+      padding: 1rem;
       text-align: center;
-      font-size: 0.9em;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--gray);
     }
 
     a {
-      color: var(--highlight-color);
+      color: var(--secondary);
       text-decoration: none;
     }
 
@@ -91,14 +110,14 @@
 </head>
 <body>
 
-  <header>
-    <h1>Game Cracking Tutorial - piracy.xyz</h1>
+  <header class="header">
+    <h1 class="site-title">Game Cracking Tutorial</h1>
   </header>
 
   <main>
     <section class="step">
       <h2>cs.rin Method</h2>
-      <p>For this approach you will need an account on the forums. You can do this by visiting the website and registering <a href="https://cs.rin.ru/forum/">here</a>.</p>
+      <p>For this approach, you will need an account on the forums. You can do this by visiting the website and registering <a href="https://cs.rin.ru/forum/">here</a>.</p>
       <p>Once you have an account, follow these steps:</p>
       <ol>
         <li>Click the search button or visit <a href="https://cs.rin.ru/forum/search.php">this link</a>.</li>
@@ -138,7 +157,7 @@
 
     <section class="step">
       <h2>Cracking the Game</h2>
-      <p>This step involves bypassing simple DRM, but doesn't include cracking more complex systems like Denuvo. If your game is from GOG, this step is unnecessary.</p>
+      <p>This step involves bypassing simple DRM but doesn't include cracking more complex systems like Denuvo. If your game is from GOG, this step is unnecessary.</p>
       <p>If the game requires a crack, follow the methods below.</p>
     </section>
 
