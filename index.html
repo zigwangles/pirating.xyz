@@ -207,7 +207,12 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.4s ease-in-out;
+      opacity: 0; /* Start hidden */
+    }
+
+    .app-card.visible {
+      opacity: 1; /* Fade in when visible */
     }
 
     .app-card:hover {
@@ -322,6 +327,15 @@
 
     .dark-mode-toggle:hover {
       opacity: 1;
+    }
+
+    footer {
+      background-color: var(--darker);
+      color: var(--text);
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--gray);
     }
 
     @media (max-width: 768px) {
@@ -888,6 +902,10 @@
       </div>
     </div>
   </div>
+
+  <footer>
+    <p>© 2025 piracy.xyz | All Rights Reserved</p>
+  </footer>
   
   <script>
     const searchBar = document.querySelector('.search-bar');
@@ -931,6 +949,12 @@
         const matchesSubcategory = !activeSubcategory || cardSubcats.includes(activeSubcategory.toLowerCase());
         
         card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'flex' : 'none';
+        if (card.style.display === 'flex') {
+          card.classList.remove('visible'); // Reset for re-animation
+          animateTiles(); // Re-animate visible tiles
+        } else {
+          card.classList.remove('visible'); // Ensure hidden cards stay invisible
+        }
       });
     }
     
@@ -968,7 +992,17 @@
         });
       });
     }
-    
+
+    // Animate tiles one by one on load or filter
+    function animateTiles() {
+      const visibleCards = Array.from(appCards).filter(card => card.style.display !== 'none');
+      visibleCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, index * 100); 
+      });
+    }
+
     if (darkModeToggle) {
       darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('light-mode');
@@ -993,6 +1027,8 @@
       searchBar.addEventListener('input', filterApps);
     }
 
+    // Trigger animation on page load
+    animateTiles();
     updateSubcategories('all');
   </script>
 </body>
