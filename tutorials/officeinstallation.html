@@ -5,16 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Windows Office Installation and Activation - pirating.xyz</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=sailing" />
   <style>
     :root {
       --primary: #FF4757;
       --secondary: #5352ED;
-      --accent: #FFDD59;
+      --accent: #FF4757;
+      --tile-accent: #FFDD59;
       --dark: #171717;
       --darker: #111111;
       --gray: #333333;
       --light-gray: #444444;
       --text: #F0F0F0;
+      --acrylic-dark: rgba(10, 10, 10, 0.65);
+      --acrylic-light: rgba(10, 10, 10, 0.65);
+      --acrylic-button: rgba(0, 0, 0, 0.2);
+      --border-radius: 16px;
     }
 
     * {
@@ -24,22 +30,66 @@
       transition: all 0.2s ease;
     }
 
+    .background--custom {
+      background-color: #FFFFFF;
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      overflow: hidden;
+      z-index: -2;
+      top: 0;
+      left: 0;
+      border-radius: 0;
+    }
+
+    canvas#canvas {
+      z-index: -1;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform: rotate(0deg) scale(2) translateY(0%);
+      --gradient-color-1: #000000;
+      --gradient-color-2: #000000;
+      --gradient-color-3: #0036FF;
+      --gradient-color-4: #FF0043;
+      --gradient-speed: 0.000006;
+    }
+
+    .acrylic-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(23, 23, 23, 0.7);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: -1;
+      pointer-events: none;
+      border-radius: 0;
+    }
+
     body {
       background-color: var(--dark);
       color: var(--text);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
+      position: relative;
+      min-height: 100vh;
     }
 
     .header {
-      background-color: var(--darker);
+      background: linear-gradient(to bottom, var(--acrylic-dark), transparent);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 2rem 1rem;
       text-align: center;
-      border-bottom: 1px solid var(--gray);
+      position: relative;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
     }
 
     .site-title {
-      font-size: 2.5rem;
+      font-size: 2.75rem;
       font-weight: 800;
       letter-spacing: -1px;
       margin-bottom: 0.5rem;
@@ -57,15 +107,28 @@
     }
 
     .step {
-      background-color: var(--gray);
-      border-radius: 12px;
+      background: var(--acrylic-light);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: var(--border-radius);
       padding: 1.5rem;
       margin-bottom: 1.5rem;
       border-left: 5px solid var(--primary);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.4s ease-in-out;
+      opacity: 0;
+    }
+
+    .step.visible {
+      opacity: 1;
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .step h2 {
-      color: var(--accent);
+      color: var(--tile-accent);
       font-size: 1.8rem;
       margin-bottom: 1rem;
     }
@@ -74,6 +137,7 @@
       font-size: 1.1rem;
       line-height: 1.6;
       margin-bottom: 1rem;
+      opacity: 0.9;
     }
 
     .step ol, .step ul {
@@ -86,16 +150,7 @@
 
     .important {
       font-weight: bold;
-      color: var(--accent);
-    }
-
-    footer {
-      background-color: var(--darker);
-      color: var(--text);
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      border-top: 1px solid var(--gray);
+      color: var(--tile-accent);
     }
 
     a {
@@ -106,9 +161,309 @@
     a:hover {
       text-decoration: underline;
     }
+
+    .top-nav {
+      position: fixed;
+      top: 0.5rem;
+      left: 0.5rem;
+      background: var(--acrylic-light);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      display: flex;
+      gap: 2rem;
+      z-index: 10;
+      transition: border-color 0.5s ease;
+    }
+
+    .top-nav:hover {
+      border: 2px solid #fa475b;
+      animation: borderFade 0.5s ease forwards;
+    }
+
+    .version-btn {
+      position: fixed;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: var(--acrylic-light);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid transparent;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: capitalize;
+      letter-spacing: 1px;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .version-btn:hover {
+      border-color: #fa475b;
+    }
+
+    .version-btn:hover .version-tooltip {
+      visibility: visible;
+      opacity: 1;
+      border-color: #fa475b;
+      animation: borderFade 0.5s ease forwards;
+      transition: opacity 0.8s ease;
+    }
+
+    @keyframes borderFade {
+      0% { border-color: transparent; }
+      100% { border-color: #fa475b; }
+    }
+
+    .version-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      background: var(--acrylic-dark);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      border: 1px solid transparent;
+      position: fixed;
+      top: 3rem;
+      right: 0.5rem;
+      width: 250px;
+      transition: opacity 2s ease;
+      z-index: 10;
+      text-align: center;
+      text-transform: capitalize;
+    }
+
+    .version-tooltip p {
+      margin: 0.5rem 0;
+    }
+
+    .version-tooltip strong, .version-tooltip .discord-label {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .version-tooltip .discord-label {
+      font-weight: 700;
+    }
+
+    .version-tooltip a {
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0.5rem 0;
+    }
+
+    .version-tooltip a:hover {
+      color: var(--primary);
+    }
+
+    .version-tooltip i {
+      margin-right: 0.5rem;
+      color: var(--tile-accent);
+    }
+
+    .menu-btn, .home-btn, .discord-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .menu-btn:hover .sidebar {
+      left: 0;
+      visibility: visible;
+      transition: left 0.8s ease;
+    }
+
+    .discord-btn:hover .discord-tooltip {
+      visibility: visible;
+      opacity: 1;
+      border-color: #fa475b;
+      animation: borderFade 0.5s ease forwards;
+      transition: opacity 0.8s ease;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 3.5rem;
+      left: -300px;
+      width: 300px;
+      height: calc(100vh - 9rem);
+      background: var(--acrylic-dark);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      border: 1px solid transparent;
+      z-index: 9;
+      transition: left 2s ease, border-color 0.5s ease;
+      overflow-y: auto;
+      visibility: hidden;
+    }
+
+    .sidebar.active {
+      left: 0;
+      visibility: visible;
+    }
+
+    .sidebar:hover {
+      border-color: #fa475b;
+      animation: borderFade 0.5s ease forwards;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-decoration: none;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border-radius: var(--border-radius);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-align: center;
+      text-transform: capitalize;
+      gap: 0.5rem;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 71, 87, 0.2);
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: var(--text);
+    }
+
+    .discord-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      background: var(--acrylic-dark);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      border: 1px solid transparent;
+      position: fixed;
+      top: 3.5rem;
+      left: 0.5rem;
+      width: 250px;
+      transition: opacity 2s ease;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .discord-tooltip p {
+      margin: 0.5rem 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .discord-tooltip a {
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0.5rem 0;
+      gap: 0.2rem;
+    }
+
+    .discord-tooltip a i {
+      margin-right: 0.2rem;
+    }
+
+    .discord-tooltip a:hover {
+      color: var(--primary);
+    }
+
+    footer {
+      background: linear-gradient(to top, var(--acrylic-dark), transparent);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text);
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      z-index: 10;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
   </style>
 </head>
 <body>
+  <div class="background--custom">
+    <canvas id="canvas"></canvas>
+  </div>
+  <div class="acrylic-overlay"></div>
+
+  <div class="top-nav">
+    <button class="menu-btn">
+      <i class="fas fa-bars"></i>
+      <div class="sidebar">
+        <a href="#" data-category="all"><i class="fas fa-home"></i> Home</a>
+        <a href="#" data-category="tutorials"><i class="fas fa-book"></i> Tutorials</a>
+        <a href="#" data-category="movies"><i class="fas fa-film"></i> Movies + Tv</a>
+        <a href="#" data-category="anime"><i class="fas fa-play"></i> Anime</a>
+        <a href="#" data-category="manga"><i class="fas fa-book-open"></i> Manga</a>
+        <a href="#" data-category="windows-games"><i class="fas fa-gamepad"></i> Windows Games</a>
+        <a href="#" data-category="mac-games"><i class="fas fa-gamepad"></i> Mac Games</a>
+        <a href="#" data-category="ebooks"><i class="fas fa-book-reader"></i> E-books</a>
+        <a href="#" data-category="audiobooks"><i class="fas fa-headphones"></i> Audiobooks</a>
+        <a href="#" data-category="windows-apps"><i class="fas fa-window-maximize"></i> Windows Apps</a>
+        <a href="#" data-category="mac-apps"><i class="fas fa-window-maximize"></i> Mac Apps</a>
+        <a href="#" data-category="android"><i class="fab fa-android"></i> Android</a>
+        <a href="#" data-category="ios"><i class="fab fa-apple"></i> iOS</a>
+        <a href="#" data-category="vpn"><i class="fas fa-shield-alt"></i> VPNs</a>
+        <a href="#" data-category="other"><i class="fas fa-ellipsis-h"></i> Other</a>
+      </div>
+    </button>
+    <button class="home-btn">
+      <i class="fas fa-home"></i>
+    </button>
+    <button class="discord-btn">
+      <i class="fab fa-discord"></i>
+      <div class="discord-tooltip">
+        <p>If you have any questions or piracy requests please submit them to our Discord</p>
+        <a href="https://discord.gg/kdTrTkhjgE" target="_blank"><i class="fab fa-discord"></i> Join Here!</a>
+      </div>
+    </button>
+  </div>
+
+  <button class="version-btn">
+    <span class="material-symbols-outlined" style="color: var(--accent);">sailing</span> Beta
+    <div class="version-tooltip">
+      <p><strong>Pirating.xyz</strong></p>
+      <p>Beta version</p>
+      <p>v1.0.4</p>
+      <p> </p>
+      <p><strong>Developers:</strong></p>
+      <p><a href="https://github.com/zigwangles" target="_blank"><i class="fab fa-github"></i> Zigwangles</a></p>
+      <p><a href="https://github.com/AntonP29" target="_blank"><i class="fab fa-github"></i> AntonP29</a></p>
+      <p> </p>
+      <p class="discord-label"><strong>Discord:</strong></p>
+      <p><a href="https://discord.gg/kdTrTkhjgE" target="_blank"><i class="fab fa-discord"></i> Join Here!</a></p>
+    </div>
+  </button>
 
   <header class="header">
     <h1 class="site-title">Windows Office Installation and Activation Guide</h1>
@@ -179,5 +534,42 @@
     <p>&copy; 2025 pirating.xyz | All Rights Reserved</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/gh/greentfrapp/pocoloco@minigl/minigl.js"></script>
+  <script>
+    var gradient = new Gradient();
+    gradient.initGradient("#canvas");
+
+    const steps = document.querySelectorAll('.step');
+    const sidebar = document.querySelector('.sidebar');
+    const menuBtn = document.querySelector('.menu-btn');
+    const homeBtn = document.querySelector('.home-btn');
+
+    function animateSteps() {
+      steps.forEach((step, index) => {
+        setTimeout(() => {
+          step.classList.add('visible');
+        }, index * 100);
+      });
+    }
+
+    // Toggle sidebar on menu button click
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+
+    // Hide sidebar when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!menuBtn.contains(event.target) && !sidebar.contains(event.target)) {
+        sidebar.classList.remove('active');
+      }
+    });
+
+    // Home button redirects to index.html
+    homeBtn.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    animateSteps();
+  </script>
 </body>
 </html>
