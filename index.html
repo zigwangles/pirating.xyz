@@ -437,7 +437,7 @@
       display: flex;
       gap: 2rem;
       z-index: 10;
-      transition: border-color 0.5s ease;
+      transition: border-color 0.5s ease, transform 0.3s ease-in-out;
     }
 
     .top-nav:hover {
@@ -445,7 +445,11 @@
       animation: borderFade 0.5s ease forwards;
     }
 
-    .menu-btn, .home-btn, .discord-btn {
+    .top-nav.hidden {
+      transform: translateY(-100%);
+    }
+
+    .menu-btn, .home-btn, .discord-btn, .partners-btn {
       background: none;
       border: none;
       color: var(--accent);
@@ -461,6 +465,14 @@
     }
 
     .discord-btn:hover .discord-tooltip {
+      visibility: visible;
+      opacity: 1;
+      border-color: #fa475b;
+      animation: borderFade 0.5s ease forwards;
+      transition: opacity 0.8s ease;
+    }
+
+    .partners-btn:hover .partners-tooltip {
       visibility: visible;
       opacity: 1;
       border-color: #fa475b;
@@ -565,6 +577,67 @@
       color: var(--primary);
     }
 
+    .partners-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      background: var(--acrylic-dark);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      border: 1px solid transparent;
+      position: fixed;
+      top: 3.5rem;
+      left: 0.5rem;
+      width: 250px;
+      transition: opacity 2s ease;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .partners-tooltip p {
+      margin: 0.5rem 0;
+    }
+
+    .partners-tooltip a {
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0.5rem 0;
+    }
+
+    .partners-tooltip a:hover {
+      color: var(--primary) !important;
+    }
+
+    .partners-tooltip strong {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .partners-tooltip p:nth-child(2) {
+      text-decoration: underline;
+    }
+
+    .partners-tooltip p:nth-child(4) {
+      border-top: 1px solid var(--light-gray);
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+    }
+
+    .partners-tooltip p:nth-child(3) a {
+      gap: 0px; /* No gap between Discord icon and text */
+    }
+
+    .partners-tooltip p:nth-child(4) a {
+      gap: 1rem; /* Larger gap between "Daisuke Signer" and the pointing emojis */
+    }
+
     footer {
       background: linear-gradient(to top, var(--acrylic-dark), transparent);
       backdrop-filter: blur(8px);
@@ -578,6 +651,40 @@
       width: 100%;
       z-index: 10;
       border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    /* Mobile-specific top nav positioning and scroll behavior, and less transparency for tooltips */
+    @media (max-width: 768px) {
+      .top-nav {
+          position: fixed;
+          top: 0.5rem;
+          left: 0.5rem;
+          padding: 0.5rem 1rem;
+          background: rgba(23, 23, 23, 0.9); /* Less transparent background */
+          backdrop-filter: blur(5px); /* Reduced blur for clarity */
+          -webkit-backdrop-filter: blur(5px);
+          z-index: 1000;
+          transition: transform 0.3s ease-in-out;
+      }
+
+      .top-nav.hidden {
+          transform: translateY(-100%);
+      }
+
+      .header {
+          padding-top: 3.5rem;
+      }
+
+      .container {
+          padding-top: 4rem;
+      }
+
+      /* Less transparency for tooltips on mobile */
+      .discord-tooltip, .partners-tooltip, .version-tooltip {
+          background: rgba(23, 23, 23, 0.9); /* Less transparent background */
+          backdrop-filter: blur(5px); /* Reduced blur for clarity */
+          -webkit-backdrop-filter: blur(5px);
+      }
     }
   </style>
 </head>
@@ -616,6 +723,17 @@
       <div class="discord-tooltip">
         <p>If you have any questions or piracy requests please submit them to our Discord</p>
         <a href="https://discord.gg/kdTrTkhjgE" target="_blank"><i class="fab fa-discord"></i> Join Here!</a>
+      </div>
+    </button>
+    <button class="partners-btn">
+      <i class="fas fa-handshake"></i>
+      <div class="partners-tooltip">
+        <p><strong style="background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent;">Partners of Pirating.xyz</strong></p>
+        <p><u>Daisuke Signer</u></p>
+        <p><a href="https://discord.gg/BRjSCXNzan" target="_blank" class="partner-link"><i class="fab fa-discord" style="color: var(--tile-accent); margin-right: 2px;"></i> Daisuke Signer Discord</a></p>
+        <p style="border-top: 1px solid var(--light-gray); margin-top: 0.5rem; padding-top: 0.5rem;">
+          <a href="https://ipasign.pro/" target="_blank" class="partner-link"><span style="font-size: 0.8rem;">👉</span> Daisuke Signer <span style="font-size: 0.8rem;">👈</span></a>
+        </p>
       </div>
     </button>
   </div>
@@ -1353,6 +1471,24 @@
     // Initialize page with URL parameter
     setInitialCategoryFromURL();
     animateTiles();
+
+    // Scroll behavior for top-nav on mobile
+    if (window.innerWidth <= 768) {
+      let lastScroll = 0;
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        const topNav = document.querySelector('.top-nav');
+
+        if (currentScroll > lastScroll && currentScroll > 50) {
+          // Scrolling down, hide nav
+          topNav.classList.add('hidden');
+        } else {
+          // Scrolling up or at top, show nav
+          topNav.classList.remove('hidden');
+        }
+        lastScroll = currentScroll;
+      });
+    }
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91a61bd1188753d0',t:'MTc0MDk3MzE4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
