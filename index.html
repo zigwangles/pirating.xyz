@@ -446,7 +446,7 @@
     }
 
     .top-nav.hidden {
-      transform: translateY(-100%);
+      transform: translateY(-100%); /* Moves completely off-screen */
     }
 
     .menu-btn, .home-btn, .discord-btn, .partners-btn {
@@ -630,12 +630,12 @@
       padding-top: 0.5rem;
     }
 
-    .partners-tooltip p:nth-child(3) a {
-      gap: 0px; /* No gap between Discord icon and text */
+    .partners-tooltip p:nth-child(3) a .fab {
+      margin-right: -8px;
     }
 
     .partners-tooltip p:nth-child(4) a {
-      gap: 1rem; /* Larger gap between "Daisuke Signer" and the pointing emojis */
+      gap: 1.5rem;
     }
 
     footer {
@@ -653,22 +653,22 @@
       border-radius: var(--border-radius) var(--border-radius) 0 0;
     }
 
-    /* Mobile-specific top nav positioning and scroll behavior, and less transparency for tooltips */
+    /* Mobile-specific top nav positioning and scroll behavior, match transparency of top-nav with Beta button, and adjust Beta button behavior */
     @media (max-width: 768px) {
       .top-nav {
           position: fixed;
           top: 0.5rem;
           left: 0.5rem;
           padding: 0.5rem 1rem;
-          background: rgba(23, 23, 23, 0.9); /* Less transparent background */
-          backdrop-filter: blur(5px); /* Reduced blur for clarity */
-          -webkit-backdrop-filter: blur(5px);
+          background: var(--acrylic-light); /* Match Beta button transparency */
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           z-index: 1000;
           transition: transform 0.3s ease-in-out;
       }
 
       .top-nav.hidden {
-          transform: translateY(-100%);
+          transform: translateY(-100vh); /* Moves completely off-screen (full viewport height) */
       }
 
       .header {
@@ -679,11 +679,64 @@
           padding-top: 4rem;
       }
 
-      /* Less transparency for tooltips on mobile */
+      /* Keep tooltips (extended versions) at their current transparency */
       .discord-tooltip, .partners-tooltip, .version-tooltip {
-          background: rgba(23, 23, 23, 0.9); /* Less transparent background */
-          backdrop-filter: blur(5px); /* Reduced blur for clarity */
-          -webkit-backdrop-filter: blur(5px);
+          background: var(--acrylic-dark); /* Retain current transparency */
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+      }
+
+      /* Make Beta button behave like top-nav on mobile, hiding completely off-screen */
+      .version-btn {
+          position: fixed;
+          top: 0.5rem;
+          right: 0.5rem;
+          background: var(--acrylic-light); /* Match top-nav transparency */
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid transparent;
+          color: var(--text);
+          font-size: 1rem;
+          font-weight: 500;
+          text-transform: capitalize;
+          letter-spacing: 1px;
+          cursor: pointer;
+          padding: 0.5rem 1rem;
+          border-radius: var(--border-radius);
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          transition: transform 0.3s ease-in-out;
+      }
+
+      .version-btn.hidden {
+          transform: translateY(-100vh); /* Moves completely off-screen (full viewport height) */
+      }
+    }
+
+    /* Desktop/default behavior for Beta button remains unchanged */
+    @media (min-width: 769px) {
+      .version-btn {
+          position: fixed;
+          top: 0.5rem;
+          right: 0.5rem;
+          background: var(--acrylic-light);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid transparent;
+          color: var(--text);
+          font-size: 1rem;
+          font-weight: 500;
+          text-transform: capitalize;
+          letter-spacing: 1px;
+          cursor: pointer;
+          padding: 0.5rem 1rem;
+          border-radius: var(--border-radius);
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
       }
     }
   </style>
@@ -730,7 +783,7 @@
       <div class="partners-tooltip">
         <p><strong style="background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent;">Partners of Pirating.xyz</strong></p>
         <p><u>Daisuke Signer</u></p>
-        <p><a href="https://discord.gg/BRjSCXNzan" target="_blank" class="partner-link"><i class="fab fa-discord" style="color: var(--tile-accent); margin-right: 2px;"></i> Daisuke Signer Discord</a></p>
+        <p><a href="https://discord.gg/BRjSCXNzan" target="_blank" class="partner-link"><i class="fab fa-discord" style="color: var(--tile-accent); margin-right: -8px;"></i> Daisuke Signer Discord</a></p>
         <p style="border-top: 1px solid var(--light-gray); margin-top: 0.5rem; padding-top: 0.5rem;">
           <a href="https://ipasign.pro/" target="_blank" class="partner-link"><span style="font-size: 0.8rem;">👉</span> Daisuke Signer <span style="font-size: 0.8rem;">👈</span></a>
         </p>
@@ -1303,6 +1356,7 @@
     const homeBtn = document.querySelector('.home-btn');
     const sidebar = document.querySelector('.sidebar');
     const menuBtn = document.querySelector('.menu-btn');
+    const versionBtn = document.querySelector('.version-btn');
 
     const subcategories = {
       "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games", "Legal"],
@@ -1472,19 +1526,22 @@
     setInitialCategoryFromURL();
     animateTiles();
 
-    // Scroll behavior for top-nav on mobile
+    // Scroll behavior for top-nav and Beta button on mobile
     if (window.innerWidth <= 768) {
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
         const topNav = document.querySelector('.top-nav');
+        const betaBtn = document.querySelector('.version-btn');
 
         if (currentScroll > lastScroll && currentScroll > 50) {
-          // Scrolling down, hide nav
+          // Scrolling down, hide both nav and Beta button completely off-screen
           topNav.classList.add('hidden');
+          if (betaBtn) betaBtn.classList.add('hidden');
         } else {
-          // Scrolling up or at top, show nav
+          // Scrolling up or at top, show both nav and Beta button
           topNav.classList.remove('hidden');
+          if (betaBtn) betaBtn.classList.remove('hidden');
         }
         lastScroll = currentScroll;
       });
