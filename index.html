@@ -98,6 +98,12 @@
       background-clip: text;
       color: transparent;
       display: inline-block;
+      animation: glow 2s ease-in-out infinite; /* Added glowing effect */
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 5px rgba(255, 71, 87, 0.5); }
+      50% { text-shadow: 0 0 10px rgba(255, 71, 87, 0.8), 0 0 15px rgba(83, 82, 237, 0.5); }
     }
 
     .site-description {
@@ -181,6 +187,7 @@
       border: none;
       font-size: 0.9rem;
       cursor: pointer;
+      opacity: 0; /* Initial state for animation */
     }
 
     .filter-btn.active {
@@ -353,6 +360,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      transition: transform 0.3s ease-in-out; /* Added for mobile/desktop consistency */
     }
 
     .version-btn:hover {
@@ -364,7 +372,7 @@
       opacity: 1;
       border-color: #fa475b;
       animation: borderFade 0.5s ease forwards;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.3s ease; /* Quick animation */
     }
 
     @keyframes borderFade {
@@ -386,7 +394,7 @@
       top: 3rem;
       right: 0.5rem;
       width: 250px;
-      transition: opacity 2s ease;
+      transition: opacity 0.3s ease, visibility 0s linear; /* Quick animation */
       z-index: 10;
       text-align: center;
       text-transform: capitalize;
@@ -446,7 +454,7 @@
     }
 
     .top-nav.hidden {
-      transform: translateY(-100%); /* Moves completely off-screen */
+      transform: translateY(-100%);
     }
 
     .menu-btn, .home-btn, .discord-btn, .partners-btn {
@@ -461,7 +469,7 @@
     .menu-btn:hover .sidebar {
       left: 0;
       visibility: visible;
-      transition: left 0.8s ease;
+      transition: left 1s ease; /* Quick animation */
     }
 
     .discord-btn:hover .discord-tooltip {
@@ -469,7 +477,7 @@
       opacity: 1;
       border-color: #fa475b;
       animation: borderFade 0.5s ease forwards;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.3s ease; /* Quick animation */
     }
 
     .partners-btn:hover .partners-tooltip {
@@ -477,7 +485,7 @@
       opacity: 1;
       border-color: #fa475b;
       animation: borderFade 0.5s ease forwards;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.3s ease; /* Quick animation */
     }
 
     .sidebar {
@@ -493,7 +501,7 @@
       border-radius: var(--border-radius);
       border: 1px solid transparent;
       z-index: 9;
-      transition: left 2s ease, border-color 0.5s ease;
+      transition: left 1s ease, visibility 0s linear; /* Quick animation */
       overflow-y: auto;
       visibility: hidden;
     }
@@ -549,7 +557,7 @@
       top: 3.5rem;
       left: 0.5rem;
       width: 250px;
-      transition: opacity 2s ease;
+      transition: opacity 0.3s ease, visibility 0s linear; /* Quick animation */
       z-index: 10;
       text-align: center;
     }
@@ -591,7 +599,7 @@
       top: 3.5rem;
       left: 0.5rem;
       width: 250px;
-      transition: opacity 2s ease;
+      transition: opacity 0.3s ease, visibility 0s linear; /* Quick animation */
       z-index: 10;
       text-align: center;
     }
@@ -653,90 +661,99 @@
       border-radius: var(--border-radius) var(--border-radius) 0 0;
     }
 
-    /* Mobile-specific top nav positioning and scroll behavior, match transparency of top-nav with Beta button, and adjust Beta button behavior */
+    /* Mobile-specific adjustments */
     @media (max-width: 768px) {
       .top-nav {
-          position: fixed;
-          top: 0.5rem;
-          left: 0.5rem;
-          padding: 0.5rem 1rem;
-          background: var(--acrylic-light); /* Match Beta button transparency */
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          z-index: 1000;
-          transition: transform 0.3s ease-in-out;
+        position: fixed;
+        top: 0.5rem;
+        left: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--acrylic-light);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
       }
 
       .top-nav.hidden {
-          transform: translateY(-100vh); /* Moves completely off-screen (full viewport height) */
+        transform: translateY(-100vh);
       }
 
       .header {
-          padding-top: 3.5rem;
+        padding-top: 3.5rem;
       }
 
       .container {
-          padding-top: 4rem;
+        padding-top: 4rem;
       }
 
-      /* Keep tooltips (extended versions) at their current transparency */
       .discord-tooltip, .partners-tooltip, .version-tooltip {
-          background: var(--acrylic-dark); /* Retain current transparency */
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+        background: rgba(10, 10, 10, 0.65);
+        backdrop-filter: blur(10px); /* Enhanced blur for mobile */
+        -webkit-backdrop-filter: blur(10px);
       }
 
-      /* Make Beta button behave like top-nav on mobile, hiding completely off-screen */
       .version-btn {
-          position: fixed;
-          top: 0.5rem;
-          right: 0.5rem;
-          background: var(--acrylic-light); /* Match top-nav transparency */
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border: 1px solid transparent;
-          color: var(--text);
-          font-size: 1rem;
-          font-weight: 500;
-          text-transform: capitalize;
-          letter-spacing: 1px;
-          cursor: pointer;
-          padding: 0.5rem 1rem;
-          border-radius: var(--border-radius);
-          z-index: 10;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          transition: transform 0.3s ease-in-out;
+        position: fixed;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: var(--acrylic-light);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid transparent;
+        color: var(--text);
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        letter-spacing: 1px;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: transform 0.3s ease-in-out;
       }
 
       .version-btn.hidden {
-          transform: translateY(-100vh); /* Moves completely off-screen (full viewport height) */
+        transform: translateY(-100vh);
       }
     }
 
-    /* Desktop/default behavior for Beta button remains unchanged */
+    /* Smaller desktop screens (769px–1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .discord-tooltip, .partners-tooltip, .version-tooltip {
+        background: rgba(10, 10, 10, 0.65);
+        backdrop-filter: blur(10px); /* Added blur */
+        -webkit-backdrop-filter: blur(10px);
+        position: fixed;
+        z-index: 10;
+      }
+    }
+
+    /* Desktop/default behavior */
     @media (min-width: 769px) {
       .version-btn {
-          position: fixed;
-          top: 0.5rem;
-          right: 0.5rem;
-          background: var(--acrylic-light);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border: 1px solid transparent;
-          color: var(--text);
-          font-size: 1rem;
-          font-weight: 500;
-          text-transform: capitalize;
-          letter-spacing: 1px;
-          cursor: pointer;
-          padding: 0.5rem 1rem;
-          border-radius: var(--border-radius);
-          z-index: 10;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
+        position: fixed;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: var(--acrylic-light);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid transparent;
+        color: var(--text);
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        letter-spacing: 1px;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
       }
     }
   </style>
@@ -1337,7 +1354,6 @@
         </div>
       </div>
 
-      <!-- Added HD Flix tile from Index Plz Work -->
       <div class="app-card" data-category="ios" data-subcategories="Entertainment">
         <div class="card-header">
           <div class="app-icon">
@@ -1368,7 +1384,6 @@
         </div>
       </div>
 
-      <!-- Added iZip Pro tile from Index Plz Work -->
       <div class="app-card" data-category="ios" data-subcategories="Discord Requests">
         <div class="card-header">
           <div class="app-icon">
@@ -1376,11 +1391,11 @@
           </div>
           <div>
             <h2 class="app-title">iZip Pro</h2>
-            <span class="app-category">Utilities</span>
+            <span class="app-category">Discord Requests</span>
           </div>
         </div>
         <div class="card-body">
-          <p class="app-description">iZip is a ZIP file management tool on iPhone and iPad.<br> • Pro version for free - usually $9.99 on the AppStore.<br>User requested it on our discord so here it is!</p>
+          <p class="app-description">iZip is a ZIP file management tool on iPhone and iPad.<br><br>• Pro version for free - usually $9.99 on the AppStore.<br><br>User requested it on our discord so here it is!</p>
           <div class="rating">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -1429,7 +1444,7 @@
       "ebooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
       "audiobooks": ["Fiction", "Non-Fiction", "Science", "Mystery", "Thriller", "Fantasy", "Romance", "Historical Fiction", "Young Adult", "Children's", "Biography", "Autobiography", "Self-Help", "Business", "History", "Technology", "Cooking", "Travel", "Poetry", "Drama", "Horror", "Comics", "Religion & Spirituality"],
       "android": ["Productivity", "Jailbreak", "Entertainment", "Games", "Communication", "Social", "Photography", "Video Players & Editors", "Music & Audio", "News & Magazines", "Travel & Local", "Maps & Navigation", "Weather", "Books & Reference", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Tools", "Personalization", "Libraries & Demo", "Medical", "Dating", "Parenting"],
-      "ios": ["Productivity", "Repos", "Telegram", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools"],
+      "ios": ["Productivity", "Repos", "Telegram", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools", "Discord Requests"],
       "vpn": ["Privacy", "Streaming", "Security", "Bypassing Censorship", "Gaming", "Torrenting", "Remote Access", "Business Use", "Public Wi-Fi Protection", "Travel", "Data Encryption", "Anonymous Browsing", "Geo-Spoofing"]
     };
     
@@ -1482,6 +1497,7 @@
         });
         allBtn.classList.add('active');
         filterApps(category);
+        animateSubcategories();
       });
       
       const subcats = subcategories[category] || [];
@@ -1498,8 +1514,10 @@
           });
           btn.classList.add('active');
           filterApps(category, subcat);
+          animateSubcategories();
         });
       });
+      animateSubcategories();
     }
 
     function animateTiles() {
@@ -1511,28 +1529,47 @@
       });
     }
 
-    // Handle initial category from URL query parameter
+    function animateCategories() {
+      const categoryButtons = document.querySelectorAll('.category-filter .filter-btn');
+      categoryButtons.forEach((btn, index) => {
+        btn.style.opacity = '0';
+        setTimeout(() => {
+          btn.style.transition = 'opacity 0.2s ease';
+          btn.style.opacity = '1';
+        }, index * 25);
+      });
+    }
+
+    function animateSubcategories() {
+      const subcategoryButtons = document.querySelectorAll('.subcategory-filter .filter-btn');
+      subcategoryButtons.forEach((btn, index) => {
+        btn.style.opacity = '0';
+        setTimeout(() => {
+          btn.style.transition = 'opacity 0.2s ease';
+          btn.style.opacity = '1';
+        }, index * 25);
+      });
+    }
+
     function setInitialCategoryFromURL() {
       const urlParams = new URLSearchParams(window.location.search);
       const initialCategory = urlParams.get('category') || 'all';
       
-      // Set active category button
       categoryBtns.forEach(btn => btn.classList.remove('active'));
       const activeBtn = document.querySelector(`.category-filter .filter-btn[data-category="${initialCategory}"]`) || 
                         document.querySelector('.category-filter .filter-btn[data-category="all"]');
       if (activeBtn) activeBtn.classList.add('active');
       
-      // Update subcategories and filter
       updateSubcategories(initialCategory);
       filterApps(initialCategory);
+      animateCategories();
+      animateSubcategories();
     }
 
-    // Toggle sidebar on menu button click
     menuBtn.addEventListener('click', () => {
       sidebar.classList.toggle('active');
     });
 
-    // Hide sidebar when clicking outside
     document.addEventListener('click', (event) => {
       if (!menuBtn.contains(event.target) && !sidebar.contains(event.target)) {
         sidebar.classList.remove('active');
@@ -1548,6 +1585,7 @@
           updateSubcategories(category);
           filterApps(category);
           sidebar.classList.remove('active');
+          animateCategories();
         });
       });
     }
@@ -1555,7 +1593,6 @@
     if (sidebarLinks.length) {
       sidebarLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-          // e.preventDefault(); // Remove this since href handles navigation
           const category = link.dataset.category;
           categoryBtns.forEach(btn => btn.classList.remove('active'));
           const activeBtn = document.querySelector(`.category-filter .filter-btn[data-category="${category}"]`);
@@ -1581,11 +1618,9 @@
       });
     }
 
-    // Initialize page with URL parameter
     setInitialCategoryFromURL();
     animateTiles();
 
-    // Scroll behavior for top-nav and Beta button on mobile
     if (window.innerWidth <= 768) {
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
@@ -1594,17 +1629,35 @@
         const betaBtn = document.querySelector('.version-btn');
 
         if (currentScroll > lastScroll && currentScroll > 50) {
-          // Scrolling down, hide both nav and Beta button completely off-screen
           topNav.classList.add('hidden');
           if (betaBtn) betaBtn.classList.add('hidden');
         } else {
-          // Scrolling up or at top, show both nav and Beta button
           topNav.classList.remove('hidden');
           if (betaBtn) betaBtn.classList.remove('hidden');
         }
         lastScroll = currentScroll;
       });
     }
+
+    if (window.innerWidth >= 769 && window.innerWidth <= 1024) {
+      let lastScroll = 0;
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        const tooltips = document.querySelectorAll('.discord-tooltip, .partners-tooltip, .version-tooltip');
+        if (currentScroll > lastScroll && currentScroll > 50) {
+          tooltips.forEach(tooltip => {
+            tooltip.style.visibility = 'hidden';
+            tooltip.style.opacity = '0';
+          });
+        } else {
+          tooltips.forEach(tooltip => {
+            tooltip.style.visibility = 'visible';
+            tooltip.style.opacity = '1';
+          });
+        }
+        lastScroll = currentScroll;
+      });
+    }
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91a61bd1188753d0',t:'MTc0MDk3MzE4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91bfb3b38d09bd0c',t:'MTc0MTI0MTU1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
