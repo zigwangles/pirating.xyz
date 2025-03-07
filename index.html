@@ -98,7 +98,7 @@
       background-clip: text;
       color: transparent;
       display: inline-block;
-      animation: glow 2s ease-in-out infinite; /* Added glowing effect */
+      animation: glow 2s ease-in-out infinite;
     }
 
     @keyframes glow {
@@ -187,7 +187,7 @@
       border: none;
       font-size: 0.9rem;
       cursor: pointer;
-      opacity: 0; /* Initial state for animation */
+      opacity: 0;
     }
 
     .filter-btn.active {
@@ -360,24 +360,11 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      transition: transform 0.3s ease-in-out; /* Added for mobile/desktop consistency */
+      transition: transform 0.3s ease-in-out, border-color 0.2s ease;
     }
 
     .version-btn:hover {
       border-color: #fa475b;
-    }
-
-    .version-btn:hover .version-tooltip {
-      visibility: visible;
-      opacity: 1;
-      border-color: #fa475b;
-      animation: borderFade 0.5s ease forwards;
-      transition: opacity 0.3s ease; /* Quick animation */
-    }
-
-    @keyframes borderFade {
-      0% { border-color: transparent; }
-      100% { border-color: #fa475b; }
     }
 
     .version-tooltip {
@@ -394,14 +381,31 @@
       top: 3rem;
       right: 0.5rem;
       width: 250px;
-      transition: opacity 0.3s ease, visibility 0s linear; /* Quick animation */
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(-10px);
       z-index: 10;
       text-align: center;
       text-transform: capitalize;
+      will-change: opacity, transform;
+    }
+
+    .version-tooltip.visible {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      border: 1px solid #fa475b;
     }
 
     .version-tooltip p {
       margin: 0.5rem 0;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .version-tooltip.visible p {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .version-tooltip strong, .version-tooltip .discord-label {
@@ -445,12 +449,11 @@
       display: flex;
       gap: 2rem;
       z-index: 10;
-      transition: border-color 0.5s ease, transform 0.3s ease-in-out;
+      transition: transform 0.3s ease-in-out, border-color 0.2s ease;
     }
 
     .top-nav:hover {
       border: 2px solid #fa475b;
-      animation: borderFade 0.5s ease forwards;
     }
 
     .top-nav.hidden {
@@ -469,23 +472,19 @@
     .menu-btn:hover .sidebar {
       left: 0;
       visibility: visible;
-      transition: left 1s ease; /* Quick animation */
+      transition: left 1s ease;
     }
 
     .discord-btn:hover .discord-tooltip {
       visibility: visible;
       opacity: 1;
-      border-color: #fa475b;
-      animation: borderFade 0.5s ease forwards;
-      transition: opacity 0.3s ease; /* Quick animation */
+      transform: translateY(0);
     }
 
     .partners-btn:hover .partners-tooltip {
       visibility: visible;
       opacity: 1;
-      border-color: #fa475b;
-      animation: borderFade 0.5s ease forwards;
-      transition: opacity 0.3s ease; /* Quick animation */
+      transform: translateY(0);
     }
 
     .sidebar {
@@ -501,7 +500,7 @@
       border-radius: var(--border-radius);
       border: 1px solid transparent;
       z-index: 9;
-      transition: left 1s ease, visibility 0s linear; /* Quick animation */
+      transition: left 1s ease, visibility 0s linear;
       overflow-y: auto;
       visibility: hidden;
     }
@@ -513,7 +512,6 @@
 
     .sidebar:hover {
       border-color: #fa475b;
-      animation: borderFade 0.5s ease forwards;
     }
 
     .sidebar a {
@@ -557,14 +555,31 @@
       top: 3.5rem;
       left: 0.5rem;
       width: 250px;
-      transition: opacity 0.3s ease, visibility 0s linear; /* Quick animation */
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(-10px);
       z-index: 10;
       text-align: center;
+      will-change: opacity, transform;
+    }
+
+    .discord-tooltip.visible {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      border: 1px solid #fa475b;
     }
 
     .discord-tooltip p {
       margin: 0.5rem 0;
       margin-bottom: 1.5rem;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .discord-tooltip.visible p {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .discord-tooltip a {
@@ -599,13 +614,30 @@
       top: 3.5rem;
       left: 0.5rem;
       width: 250px;
-      transition: opacity 0.3s ease, visibility 0s linear; /* Quick animation */
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(-10px);
       z-index: 10;
       text-align: center;
+      will-change: opacity, transform;
+    }
+
+    .partners-tooltip.visible {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      border: 1px solid #fa475b;
     }
 
     .partners-tooltip p {
       margin: 0.5rem 0;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .partners-tooltip.visible p {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .partners-tooltip a {
@@ -689,31 +721,15 @@
 
       .discord-tooltip, .partners-tooltip, .version-tooltip {
         background: rgba(10, 10, 10, 0.65);
-        backdrop-filter: blur(10px); /* Enhanced blur for mobile */
-        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
       }
 
       .version-btn {
         position: fixed;
         top: 0.5rem;
         right: 0.5rem;
-        background: var(--acrylic-light);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid transparent;
-        color: var(--text);
-        font-size: 1rem;
-        font-weight: 500;
-        text-transform: capitalize;
-        letter-spacing: 1px;
-        cursor: pointer;
-        padding: 0.5rem 1rem;
-        border-radius: var(--border-radius);
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: transform 0.3s ease-in-out;
+        transition: transform 0.3s ease-in-out, border-color 0.2s ease;
       }
 
       .version-btn.hidden {
@@ -725,10 +741,14 @@
     @media (min-width: 769px) and (max-width: 1024px) {
       .discord-tooltip, .partners-tooltip, .version-tooltip {
         background: rgba(10, 10, 10, 0.65);
-        backdrop-filter: blur(10px); /* Added blur */
+        backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         position: fixed;
         z-index: 10;
+      }
+
+      .top-nav.hidden, .version-btn.hidden {
+        transform: translateY(-100%);
       }
     }
 
@@ -738,22 +758,7 @@
         position: fixed;
         top: 0.5rem;
         right: 0.5rem;
-        background: var(--acrylic-light);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid transparent;
-        color: var(--text);
-        font-size: 1rem;
-        font-weight: 500;
-        text-transform: capitalize;
-        letter-spacing: 1px;
-        cursor: pointer;
-        padding: 0.5rem 1rem;
-        border-radius: var(--border-radius);
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        transition: transform 0.3s ease-in-out, border-color 0.2s ease;
       }
     }
   </style>
@@ -798,12 +803,10 @@
     <button class="partners-btn">
       <i class="fas fa-handshake"></i>
       <div class="partners-tooltip">
-        <p><strong style="background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent;">Partners of Pirating.xyz</strong></p>
+        <p><strong>Partners of Pirating.xyz</strong></p>
         <p><u>Daisuke Signer</u></p>
-        <p><a href="https://discord.gg/BRjSCXNzan" target="_blank" class="partner-link"><i class="fab fa-discord" style="color: var(--tile-accent); margin-right: -8px;"></i> Daisuke Signer Discord</a></p>
-        <p style="border-top: 1px solid var(--light-gray); margin-top: 0.5rem; padding-top: 0.5rem;">
-          <a href="https://ipasign.pro/" target="_blank" class="partner-link"><span style="font-size: 0.8rem;">👉</span> Daisuke Signer <span style="font-size: 0.8rem;">👈</span></a>
-        </p>
+        <p><a href="https://discord.gg/BRjSCXNzan" target="_blank"><i class="fab fa-discord" style="color: var(--tile-accent);"></i> Daisuke Signer Discord</a></p>
+        <p><a href="https://ipasign.pro/" target="_blank"><span style="font-size: 0.8rem;">👉</span> Daisuke Signer <span style="font-size: 0.8rem;">👈</span></a></p>
       </div>
     </button>
   </div>
@@ -1431,6 +1434,8 @@
     const sidebar = document.querySelector('.sidebar');
     const menuBtn = document.querySelector('.menu-btn');
     const versionBtn = document.querySelector('.version-btn');
+    const discordBtn = document.querySelector('.discord-btn');
+    const partnersBtn = document.querySelector('.partners-btn');
 
     const subcategories = {
       "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games", "Legal"],
@@ -1618,6 +1623,32 @@
       });
     }
 
+    function handleTooltip(btn, tooltipClass) {
+      const tooltip = btn.querySelector(tooltipClass);
+      btn.addEventListener('mouseenter', () => {
+        tooltip.classList.add('visible');
+        tooltip.querySelectorAll('p').forEach((p, index) => {
+          p.style.opacity = '0';
+          p.style.transform = 'translateY(10px)';
+          setTimeout(() => {
+            p.style.opacity = '1';
+            p.style.transform = 'translateY(0)';
+          }, index * 50);
+        });
+      });
+      btn.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('visible');
+        tooltip.querySelectorAll('p').forEach(p => {
+          p.style.opacity = '0';
+          p.style.transform = 'translateY(-10px)';
+        });
+      });
+    }
+
+    handleTooltip(versionBtn, '.version-tooltip');
+    handleTooltip(discordBtn, '.discord-tooltip');
+    handleTooltip(partnersBtn, '.partners-tooltip');
+
     setInitialCategoryFromURL();
     animateTiles();
 
@@ -1643,21 +1674,20 @@
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
-        const tooltips = document.querySelectorAll('.discord-tooltip, .partners-tooltip, .version-tooltip');
+        const topNav = document.querySelector('.top-nav');
+        const betaBtn = document.querySelector('.version-btn');
+
         if (currentScroll > lastScroll && currentScroll > 50) {
-          tooltips.forEach(tooltip => {
-            tooltip.style.visibility = 'hidden';
-            tooltip.style.opacity = '0';
-          });
+          topNav.classList.add('hidden');
+          betaBtn.classList.add('hidden');
         } else {
-          tooltips.forEach(tooltip => {
-            tooltip.style.visibility = 'visible';
-            tooltip.style.opacity = '1';
-          });
+          topNav.classList.remove('hidden');
+          betaBtn.classList.remove('hidden');
         }
         lastScroll = currentScroll;
       });
     }
   </script>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91cbe281c8a4adb9',t:'MTc0MTM2OTI5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
