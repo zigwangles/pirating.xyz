@@ -347,7 +347,7 @@
       background: var(--acrylic-light);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid transparent;
+      border: 1px solid transparent; /* Base border width */
       color: var(--text);
       font-size: 1rem;
       font-weight: 500;
@@ -372,13 +372,13 @@
     .partners-tooltip {
       visibility: hidden;
       opacity: 0;
-      background: rgba(10, 10, 10, 0.65) !important; /* Match the button's acrylic-light background */
-      backdrop-filter: blur(8px) !important; /* Add blur to match buttons */
-      -webkit-backdrop-filter: blur(8px) !important; /* Add blur for Safari */
+      background: rgba(10, 10, 10, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid rgba(250, 71, 91, 0.4) !important;
+      border: 1px solid rgba(250, 71, 91, 0.4); /* Match button border width */
       position: fixed;
       z-index: 10;
       transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -485,18 +485,18 @@
       top: 3.5rem;
       left: -300px;
       width: 300px;
-      height: calc(100vh - 3.5rem); /* Ensure full height */
-      background: rgba(10, 10, 10, 0.65) !important;
-      backdrop-filter: blur(8px) !important; /* Ensure blur effect */
-      -webkit-backdrop-filter: blur(8px) !important; /* Safari support */
+      height: calc(100vh - 3.5rem);
+      background: rgba(10, 10, 10, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid rgba(250, 71, 91, 0.4) !important;
+      border: 1px solid rgba(250, 71, 91, 0.4); /* Match button border width */
       z-index: 9;
       transition: left 0.5s ease-in-out;
       overflow-y: auto;
       visibility: hidden;
-      transform: translateZ(0); /* Force hardware acceleration to prevent clipping */
+      transform: translateZ(0);
     }
 
     .sidebar::before {
@@ -598,24 +598,33 @@
     @media (max-width: 768px) {
       .top-nav {
         padding: 0.5rem 1rem;
+        transition: transform 0.3s ease-in-out;
       }
 
-      .header {
-        padding-top: 3.5rem;
-      }
-
-      .container {
-        padding-top: 4rem;
-      }
-
-      .sidebar {
-        backdrop-filter: blur(25px) brightness(0.8);
-        -webkit-backdrop-filter: blur(25px) brightness(0.8);
+      .top-nav.hidden {
+        transform: translateY(-100%); /* Match index 3 behavior */
       }
 
       .version-btn {
         top: 0.5rem;
         right: 0.5rem;
+        transition: transform 0.3s ease-in-out, border-color 0.2s ease;
+      }
+
+      .version-btn.hidden {
+        transform: translateY(-100%); /* Match index 3 behavior */
+      }
+
+      .version-tooltip,
+      .discord-tooltip,
+      .partners-tooltip {
+        transform: translateY(-100%); /* Start off-screen */
+      }
+
+      .version-tooltip.visible,
+      .discord-tooltip.visible,
+      .partners-tooltip.visible {
+        transform: translateY(0); /* Slide in when visible */
       }
     }
 
@@ -1344,7 +1353,7 @@
   <script>
     var gradient = new Gradient();
     gradient.initGradient("#canvas");
-
+  
     const searchBar = document.querySelector('.search-bar');
     const appCards = document.querySelectorAll('.app-card');
     const categoryBtns = document.querySelectorAll('.category-filter .filter-btn');
@@ -1356,7 +1365,7 @@
     const versionBtn = document.querySelector('.version-btn');
     const discordBtn = document.querySelector('.discord-btn');
     const partnersBtn = document.querySelector('.partners-btn');
-
+  
     const subcategories = {
       "tutorials": ["Cracking", "Torrenting", "File Checking", "Run Games", "Legal"],
       "movies": ["Ad Free", "Multiple Servers", "Websites", "Login", "+ Anime"],
@@ -1372,11 +1381,11 @@
       "ios": ["Productivity", "Repos", "Telegram", "Entertainment", "Games", "Communication", "Social Networking", "Photo & Video", "Music", "News", "Travel", "Navigation", "Weather", "Books", "Education", "Health & Fitness", "Food & Drink", "Shopping", "Finance", "Business", "Utilities", "Lifestyle", "Reference", "Sports", "Kids", "Jailbreak", "Developer Tools", "Discord Requests"],
       "vpn": ["Privacy", "Streaming", "Security", "Bypassing Censorship", "Gaming", "Torrenting", "Remote Access", "Business Use", "Public Wi-Fi Protection", "Travel", "Data Encryption", "Anonymous Browsing", "Geo-Spoofing"]
     };
-    
+  
     function filterApps(category = 'all', subcategory = null) {
       if (!appCards.length) return;
       const searchTerm = searchBar ? searchBar.value.toLowerCase() : '';
-      
+  
       appCards.forEach(card => {
         const title = card.querySelector('.app-title').textContent.toLowerCase();
         const desc = card.querySelector('.app-description').textContent.toLowerCase();
@@ -1384,11 +1393,11 @@
         const cardSubcats = card.dataset.subcategories
           ? card.dataset.subcategories.split(',').map(subcat => subcat.trim().toLowerCase())
           : [];
-        
+  
         const matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
         const matchesCategory = category === 'all' || cardCategory === category;
         const matchesSubcategory = !subcategory || cardSubcats.includes(subcategory.toLowerCase());
-        
+  
         card.style.display = (matchesSearch && matchesCategory && matchesSubcategory) ? 'flex' : 'none';
         if (card.style.display === 'flex') {
           card.classList.remove('visible');
@@ -1397,7 +1406,7 @@
           card.classList.remove('visible');
         }
       });
-
+  
       const visibleCards = Array.from(appCards).filter(card => card.style.display !== 'none');
       const gridHeight = visibleCards.length > 0 ? document.querySelector('.app-grid').offsetHeight : 0;
       const filterSectionHeight = document.querySelector('.filter-section').offsetHeight;
@@ -1406,16 +1415,16 @@
       const totalContentHeight = headerHeight + searchContainerHeight + filterSectionHeight + gridHeight + 6 * 16;
       document.body.style.minHeight = `${Math.max(totalContentHeight, window.innerHeight)}px`;
     }
-    
+  
     function updateSubcategories(category) {
       if (!subcategoryFilter) return;
       subcategoryFilter.innerHTML = '';
-      
+  
       const allBtn = document.createElement('button');
       allBtn.classList.add('filter-btn', 'active');
       allBtn.textContent = 'All';
       subcategoryFilter.appendChild(allBtn);
-      
+  
       allBtn.addEventListener('click', () => {
         document.querySelectorAll('.subcategory-filter .filter-btn').forEach(btn => {
           btn.classList.remove('active');
@@ -1424,7 +1433,7 @@
         filterApps(category);
         animateSubcategories();
       });
-      
+  
       const subcats = subcategories[category] || [];
       subcats.forEach(subcat => {
         const btn = document.createElement('button');
@@ -1432,7 +1441,7 @@
         btn.dataset.subcategory = subcat;
         btn.textContent = subcat;
         subcategoryFilter.appendChild(btn);
-        
+  
         btn.addEventListener('click', () => {
           document.querySelectorAll('.subcategory-filter .filter-btn').forEach(b => {
             b.classList.remove('active');
@@ -1444,7 +1453,7 @@
       });
       animateSubcategories();
     }
-
+  
     function animateTiles() {
       const visibleCards = Array.from(appCards).filter(card => card.style.display !== 'none');
       visibleCards.forEach((card, index) => {
@@ -1453,7 +1462,7 @@
         }, index * 100);
       });
     }
-
+  
     function animateCategories() {
       const categoryButtons = document.querySelectorAll('.category-filter .filter-btn');
       categoryButtons.forEach((btn, index) => {
@@ -1464,7 +1473,7 @@
         }, index * 25);
       });
     }
-
+  
     function animateSubcategories() {
       const subcategoryButtons = document.querySelectorAll('.subcategory-filter .filter-btn');
       subcategoryButtons.forEach((btn, index) => {
@@ -1475,32 +1484,70 @@
         }, index * 25);
       });
     }
-
+  
     function setInitialCategoryFromURL() {
       const urlParams = new URLSearchParams(window.location.search);
       const initialCategory = urlParams.get('category') || 'all';
-      
+  
       categoryBtns.forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.querySelector(`.category-filter .filter-btn[data-category="${initialCategory}"]`) || 
+      const activeBtn = document.querySelector(`.category-filter .filter-btn[data-category="${initialCategory}"]`) ||
                         document.querySelector('.category-filter .filter-btn[data-category="all"]');
       if (activeBtn) activeBtn.classList.add('active');
-      
+  
       updateSubcategories(initialCategory);
       filterApps(initialCategory);
       animateCategories();
       animateSubcategories();
     }
-
+  
+    // Click to toggle sidebar
     menuBtn.addEventListener('click', () => {
       sidebar.classList.toggle('active');
     });
-
-    document.addEventListener('click', (event) => {
-      if (!menuBtn.contains(event.target) && !sidebar.contains(event.target)) {
+  
+    // Hover to show sidebar, hide when leaving unless clicked open
+    let isSidebarClicked = false;
+  
+    menuBtn.addEventListener('click', () => {
+      isSidebarClicked = sidebar.classList.contains('active');
+    });
+  
+    menuBtn.addEventListener('mouseenter', () => {
+      if (!isSidebarClicked) {
+        sidebar.classList.add('active');
+      }
+    });
+  
+    menuBtn.addEventListener('mouseleave', () => {
+      if (!isSidebarClicked) {
         sidebar.classList.remove('active');
       }
     });
-
+  
+    // Keep sidebar open when hovering over it, hide when leaving unless clicked
+    sidebar.addEventListener('mouseenter', () => {
+      if (!isSidebarClicked) {
+        sidebar.classList.add('active');
+      }
+    });
+  
+    sidebar.addEventListener('mouseleave', () => {
+      if (!isSidebarClicked) {
+        sidebar.classList.remove('active');
+      }
+    });
+  
+    // Click outside to close sidebar
+    document.addEventListener('click', (event) => {
+      const isClickInsideSidebar = sidebar.contains(event.target);
+      const isClickOnMenuBtn = menuBtn.contains(event.target);
+  
+      if (!isClickInsideSidebar && !isClickOnMenuBtn && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        isSidebarClicked = false; // Reset clicked state when closing via click-outside
+      }
+    });
+  
     if (categoryBtns.length) {
       categoryBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1510,11 +1557,12 @@
           updateSubcategories(category);
           filterApps(category);
           sidebar.classList.remove('active');
+          isSidebarClicked = false; // Reset clicked state when selecting a category
           animateCategories();
         });
       });
     }
-
+  
     if (sidebarLinks.length) {
       sidebarLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -1525,16 +1573,17 @@
           updateSubcategories(category);
           filterApps(category);
           sidebar.classList.remove('active');
+          isSidebarClicked = false; // Reset clicked state when clicking a link
         });
       });
     }
-
+  
     if (homeBtn) {
       homeBtn.addEventListener('click', () => {
         window.location.href = 'https://www.pirating.xyz/index.html';
       });
     }
-    
+  
     if (searchBar && appCards.length) {
       searchBar.addEventListener('input', () => {
         const activeCategory = document.querySelector('.category-filter .filter-btn.active')?.dataset.category || 'all';
@@ -1542,40 +1591,42 @@
         filterApps(activeCategory, activeSubcategory);
       });
     }
-
+  
     function handleTooltip(btn, tooltipClass) {
       const tooltip = btn.querySelector(tooltipClass);
       let isClicked = false;
-
-      // Hover behavior
+  
       btn.addEventListener('mouseenter', () => {
         if (!isClicked) {
           tooltip.classList.add('visible');
           animateTooltipContent(tooltip);
         }
       });
-
+  
       btn.addEventListener('mouseleave', () => {
         if (!isClicked) {
           tooltip.classList.remove('visible');
           resetTooltipContent(tooltip);
         }
       });
-
-      // Click behavior
+  
       btn.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default button behavior
-        isClicked = !isClicked;
-        if (isClicked) {
-          tooltip.classList.add('visible');
-          animateTooltipContent(tooltip);
-        } else {
-          tooltip.classList.remove('visible');
-          resetTooltipContent(tooltip);
+        if (e.target === btn || e.target.tagName !== 'A') {
+          isClicked = !isClicked;
+          if (isClicked) {
+            tooltip.classList.add('visible');
+            animateTooltipContent(tooltip);
+          } else {
+            tooltip.classList.remove('visible');
+            resetTooltipContent(tooltip);
+          }
         }
       });
-
-      // Click outside to close
+  
+      tooltip.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+  
       document.addEventListener('click', (event) => {
         if (isClicked && !btn.contains(event.target) && !tooltip.contains(event.target)) {
           isClicked = false;
@@ -1584,7 +1635,7 @@
         }
       });
     }
-
+  
     function animateTooltipContent(tooltip) {
       tooltip.querySelectorAll('p').forEach((p, index) => {
         p.style.opacity = '0';
@@ -1595,46 +1646,51 @@
         }, index * 50);
       });
     }
-
+  
     function resetTooltipContent(tooltip) {
       tooltip.querySelectorAll('p').forEach(p => {
         p.style.opacity = '0';
         p.style.transform = 'translateY(-10px)';
       });
     }
-
+  
     handleTooltip(versionBtn, '.version-tooltip');
     handleTooltip(discordBtn, '.discord-tooltip');
     handleTooltip(partnersBtn, '.partners-tooltip');
-
+  
     setInitialCategoryFromURL();
     animateTiles();
-
+  
     if (window.innerWidth <= 768) {
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
         const topNav = document.querySelector('.top-nav');
         const betaBtn = document.querySelector('.version-btn');
-
+        const tooltips = document.querySelectorAll('.version-tooltip, .discord-tooltip, .partners-tooltip');
+  
         if (currentScroll > lastScroll && currentScroll > 50) {
           topNav.classList.add('hidden');
-          if (betaBtn) betaBtn.classList.add('hidden');
+          betaBtn.classList.add('hidden');
+          tooltips.forEach(tooltip => {
+            tooltip.classList.remove('visible');
+            resetTooltipContent(tooltip);
+          });
         } else {
           topNav.classList.remove('hidden');
-          if (betaBtn) betaBtn.classList.remove('hidden');
+          betaBtn.classList.remove('hidden');
         }
         lastScroll = currentScroll;
       });
     }
-
+  
     if (window.innerWidth >= 769 && window.innerWidth <= 1024) {
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
         const topNav = document.querySelector('.top-nav');
         const betaBtn = document.querySelector('.version-btn');
-
+  
         if (currentScroll > lastScroll && currentScroll > 50) {
           topNav.classList.add('hidden');
           betaBtn.classList.add('hidden');
