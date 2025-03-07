@@ -367,47 +367,85 @@
       border-color: #fa475b;
     }
 
-    .version-tooltip {
+    .version-tooltip,
+    .discord-tooltip,
+    .partners-tooltip {
       visibility: hidden;
       opacity: 0;
-      background: var(--acrylic-dark);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      background: rgba(10, 10, 10, 0.65) !important; /* Match the button's acrylic-light background */
+      backdrop-filter: blur(8px) !important; /* Add blur to match buttons */
+      -webkit-backdrop-filter: blur(8px) !important; /* Add blur for Safari */
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid #fa475b;
+      border: 1px solid rgba(250, 71, 91, 0.4) !important;
       position: fixed;
+      z-index: 10;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      transform: translateY(-10px);
+      will-change: opacity, transform;
+      overflow: hidden;
+    }
+
+    .version-tooltip::before,
+    .discord-tooltip::before,
+    .partners-tooltip::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: inherit;
+      backdrop-filter: inherit;
+      -webkit-backdrop-filter: inherit;
+      z-index: -1;
+    }
+
+    .version-tooltip {
       top: 3rem;
       right: 0.5rem;
       width: 250px;
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      transform: translateY(-10px);
-      z-index: 10;
-      text-align: center;
-      text-transform: capitalize;
-      will-change: opacity, transform;
     }
 
-    .version-tooltip.visible {
+    .discord-tooltip {
+      top: 3.5rem;
+      left: 0.5rem;
+      width: 250px;
+    }
+
+    .partners-tooltip {
+      top: 3.5rem;
+      left: 0.5rem;
+      width: 250px;
+    }
+
+    .version-tooltip.visible,
+    .discord-tooltip.visible,
+    .partners-tooltip.visible {
       visibility: visible;
       opacity: 1;
       transform: translateY(0);
     }
 
-    .version-tooltip p {
+    .version-tooltip p,
+    .discord-tooltip p,
+    .partners-tooltip p {
       margin: 0.5rem 0;
       transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       opacity: 0;
       transform: translateY(10px);
     }
-
-    .version-tooltip.visible p {
+    
+    .version-tooltip.visible p,
+    .discord-tooltip.visible p,
+    .partners-tooltip.visible p {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .version-tooltip strong, .version-tooltip .discord-label {
+    .version-tooltip strong, 
+    .version-tooltip .discord-label {
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
@@ -418,7 +456,9 @@
       font-weight: 700;
     }
 
-    .version-tooltip a {
+    .version-tooltip a,
+    .discord-tooltip a,
+    .partners-tooltip a {
       color: var(--text);
       text-decoration: none;
       display: flex;
@@ -427,45 +467,17 @@
       margin: 0.5rem 0;
     }
 
-    .version-tooltip a:hover {
+    .version-tooltip a:hover,
+    .discord-tooltip a:hover,
+    .partners-tooltip a:hover {
       color: var(--primary);
     }
 
-    .version-tooltip i {
+    .version-tooltip i,
+    .discord-tooltip i,
+    .partners-tooltip i {
       margin-right: 0.5rem;
       color: var(--tile-accent);
-    }
-
-    .top-nav {
-      position: fixed;
-      top: 0.5rem;
-      left: 0.5rem;
-      background: var(--acrylic-light);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 0.75rem 1.5rem;
-      border-radius: var(--border-radius);
-      display: flex;
-      gap: 2rem;
-      z-index: 10;
-      transition: transform 0.3s ease-in-out, border-color 0.2s ease;
-    }
-
-    .top-nav:hover {
-      border: 2px solid #fa475b;
-    }
-
-    .top-nav.hidden {
-      transform: translateY(-100%);
-    }
-
-    .menu-btn, .home-btn, .discord-btn, .partners-btn {
-      background: none;
-      border: none;
-      color: var(--accent);
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 0;
     }
 
     .sidebar {
@@ -473,10 +485,10 @@
       top: 3.5rem;
       left: -300px;
       width: 300px;
-      height: calc(100vh - 9rem);
-      background: var(--acrylic-dark);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      height: calc(100vh - 3.5rem); /* Ensure full height */
+      background: rgba(10, 10, 10, 0.65) !important;
+      backdrop-filter: blur(8px) !important; /* Ensure blur effect */
+      -webkit-backdrop-filter: blur(8px) !important; /* Safari support */
       padding: 1rem;
       border-radius: var(--border-radius);
       border: 1px solid transparent;
@@ -484,6 +496,20 @@
       transition: left 0.5s ease-in-out;
       overflow-y: auto;
       visibility: hidden;
+      transform: translateZ(0); /* Force hardware acceleration to prevent clipping */
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: inherit;
+      backdrop-filter: inherit;
+      -webkit-backdrop-filter: inherit;
+      z-index: -1;
     }
 
     .sidebar.active {
@@ -522,131 +548,36 @@
       color: var(--text);
     }
 
-    .discord-tooltip {
-      visibility: hidden;
-      opacity: 0;
-      background: var(--acrylic-dark);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      color: var(--text);
-      padding: 1rem;
-      border-radius: var(--border-radius);
-      border: 1px solid #fa475b;
+    .top-nav {
       position: fixed;
-      top: 3.5rem;
+      top: 0.5rem;
       left: 0.5rem;
-      width: 250px;
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      transform: translateY(-10px);
-      z-index: 10;
-      text-align: center;
-      will-change: opacity, transform;
-    }
-
-    .discord-tooltip.visible {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .discord-tooltip p {
-      margin: 0.5rem 0;
-      margin-bottom: 1.5rem;
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .discord-tooltip.visible p {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .discord-tooltip a {
-      color: var(--text);
-      text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0.5rem 0;
-      gap: 0.2rem;
-    }
-
-    .discord-tooltip a i {
-      margin-right: 0.2rem;
-    }
-
-    .discord-tooltip a:hover {
-      color: var(--primary);
-    }
-
-    .partners-tooltip {
-      visibility: hidden;
-      opacity: 0;
-      background: var(--acrylic-dark);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      color: var(--text);
-      padding: 1rem;
+      background: var(--acrylic-light);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.75rem 1.5rem;
       border-radius: var(--border-radius);
-      border: 1px solid #fa475b;
-      position: fixed;
-      top: 3.5rem;
-      left: 0.5rem;
-      width: 250px;
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      transform: translateY(-10px);
-      z-index: 10;
-      text-align: center;
-      will-change: opacity, transform;
-    }
-
-    .partners-tooltip.visible {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .partners-tooltip p {
-      margin: 0.5rem 0;
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .partners-tooltip.visible p {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .partners-tooltip a {
-      color: var(--text);
-      text-decoration: none;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0.5rem 0;
+      gap: 2rem;
+      z-index: 10;
+      transition: transform 0.3s ease-in-out, border-color 0.2s ease;
     }
 
-    .partners-tooltip a:hover {
-      color: var(--primary) !important;
+    .top-nav:hover {
+      border: 2px solid #fa475b;
     }
 
-    .partners-tooltip strong {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .top-nav.hidden {
+      transform: translateY(-100%);
     }
 
-    .partners-tooltip p:nth-child(2) {
-      text-decoration: underline;
-    }
-
-    .partners-tooltip p:nth-child(4) {
-      border-top: 1px solid var(--light-gray);
-      margin-top: 0.5rem;
-      padding-top: 0.5rem;
+    .menu-btn, .home-btn, .discord-btn, .partners-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0;
     }
 
     footer {
@@ -664,22 +595,9 @@
       border-radius: var(--border-radius) var(--border-radius) 0 0;
     }
 
-    /* Mobile-specific adjustments */
     @media (max-width: 768px) {
       .top-nav {
-        position: fixed;
-        top: 0.5rem;
-        left: 0.5rem;
         padding: 0.5rem 1rem;
-        background: var(--acrylic-light);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        z-index: 1000;
-        transition: transform 0.3s ease-in-out;
-      }
-
-      .top-nav.hidden {
-        transform: translateY(-100vh);
       }
 
       .header {
@@ -690,55 +608,78 @@
         padding-top: 4rem;
       }
 
-      /* Add blur to tooltips */
-      .discord-tooltip, .partners-tooltip, .version-tooltip {
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        background: rgba(10, 10, 10, 0.65); /* Semi-transparent background */
-      }
-
-      /* Add blur to sidebar */
       .sidebar {
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        background: rgba(10, 10, 10, 0.65); /* Semi-transparent background */
+        backdrop-filter: blur(25px) brightness(0.8);
+        -webkit-backdrop-filter: blur(25px) brightness(0.8);
       }
 
       .version-btn {
-        position: fixed;
         top: 0.5rem;
         right: 0.5rem;
-        transition: transform 0.3s ease-in-out, border-color 0.2s ease;
-      }
-
-      .version-btn.hidden {
-        transform: translateY(-100vh);
       }
     }
 
-    /* Smaller desktop screens (769px–1024px) */
     @media (min-width: 769px) and (max-width: 1024px) {
-      .discord-tooltip, .partners-tooltip, .version-tooltip {
-        background: rgba(10, 10, 10, 0.65);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        position: fixed;
-        z-index: 10;
-      }
-
-      .top-nav.hidden, .version-btn.hidden {
+      .top-nav.hidden,
+      .version-btn.hidden {
         transform: translateY(-100%);
       }
     }
 
-    /* Desktop/default behavior */
     @media (min-width: 769px) {
       .version-btn {
         position: fixed;
         top: 0.5rem;
         right: 0.5rem;
-        transition: transform 0.3s ease-in-out, border-color 0.2s ease;
       }
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        height: calc(100vh - 3.5rem); /* Ensure full height */
+        top: 3.5rem; /* Position below top nav */
+        backdrop-filter: blur(8px) !important; /* Reinforce blur effect */
+        -webkit-backdrop-filter: blur(8px) !important; /* Safari support */
+        transform: translateZ(0); /* Prevent clipping */
+      }
+
+      .sidebar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        backdrop-filter: inherit;
+        -webkit-backdrop-filter: inherit;
+        z-index: -1;
+      }
+
+      .sidebar.active {
+        left: 0;
+        visibility: visible;
+      }
+    }
+
+    /* Style for the "Partners of Pirating.xyz" to match the title gradient */
+    .partners-tooltip p:first-child strong {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Increase space between emojis and "Daisuke Signer" */
+    .partners-tooltip p:last-child a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem; /* Adjust this value to increase/decrease spacing */
+    }
+
+    /* Ensure the emojis remain properly sized */
+    .partners-tooltip p:last-child a span {
+      font-size: 0.8rem;
     }
   </style>
 </head>
@@ -1705,5 +1646,5 @@
       });
     }
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91cd131cbb90df1b',t:'MTc0MTM4MTc3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
