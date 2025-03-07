@@ -376,12 +376,12 @@
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid transparent;
+      border: 1px solid #fa475b;
       position: fixed;
       top: 3rem;
       right: 0.5rem;
       width: 250px;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       transform: translateY(-10px);
       z-index: 10;
       text-align: center;
@@ -393,12 +393,11 @@
       visibility: visible;
       opacity: 1;
       transform: translateY(0);
-      border: 1px solid #fa475b;
     }
 
     .version-tooltip p {
       margin: 0.5rem 0;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       opacity: 0;
       transform: translateY(10px);
     }
@@ -469,24 +468,6 @@
       padding: 0;
     }
 
-    .menu-btn:hover .sidebar {
-      left: 0;
-      visibility: visible;
-      transition: left 1s ease;
-    }
-
-    .discord-btn:hover .discord-tooltip {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .partners-btn:hover .partners-tooltip {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .sidebar {
       position: fixed;
       top: 3.5rem;
@@ -500,7 +481,7 @@
       border-radius: var(--border-radius);
       border: 1px solid transparent;
       z-index: 9;
-      transition: left 1s ease, visibility 0s linear;
+      transition: left 0.5s ease-in-out;
       overflow-y: auto;
       visibility: hidden;
     }
@@ -550,12 +531,12 @@
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid transparent;
+      border: 1px solid #fa475b;
       position: fixed;
       top: 3.5rem;
       left: 0.5rem;
       width: 250px;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       transform: translateY(-10px);
       z-index: 10;
       text-align: center;
@@ -566,13 +547,12 @@
       visibility: visible;
       opacity: 1;
       transform: translateY(0);
-      border: 1px solid #fa475b;
     }
 
     .discord-tooltip p {
       margin: 0.5rem 0;
       margin-bottom: 1.5rem;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       opacity: 0;
       transform: translateY(10px);
     }
@@ -609,12 +589,12 @@
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid transparent;
+      border: 1px solid #fa475b;
       position: fixed;
       top: 3.5rem;
       left: 0.5rem;
       width: 250px;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       transform: translateY(-10px);
       z-index: 10;
       text-align: center;
@@ -625,12 +605,11 @@
       visibility: visible;
       opacity: 1;
       transform: translateY(0);
-      border: 1px solid #fa475b;
     }
 
     .partners-tooltip p {
       margin: 0.5rem 0;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       opacity: 0;
       transform: translateY(10px);
     }
@@ -668,14 +647,6 @@
       border-top: 1px solid var(--light-gray);
       margin-top: 0.5rem;
       padding-top: 0.5rem;
-    }
-
-    .partners-tooltip p:nth-child(3) a .fab {
-      margin-right: -8px;
-    }
-
-    .partners-tooltip p:nth-child(4) a {
-      gap: 1.5rem;
     }
 
     footer {
@@ -720,6 +691,12 @@
       }
 
       .discord-tooltip, .partners-tooltip, .version-tooltip {
+        background: rgba(10, 10, 10, 0.65);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+      }
+
+      .sidebar {
         background: rgba(10, 10, 10, 0.65);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
@@ -1625,23 +1602,61 @@
 
     function handleTooltip(btn, tooltipClass) {
       const tooltip = btn.querySelector(tooltipClass);
+      let isClicked = false;
+
+      // Hover behavior
       btn.addEventListener('mouseenter', () => {
-        tooltip.classList.add('visible');
-        tooltip.querySelectorAll('p').forEach((p, index) => {
-          p.style.opacity = '0';
-          p.style.transform = 'translateY(10px)';
-          setTimeout(() => {
-            p.style.opacity = '1';
-            p.style.transform = 'translateY(0)';
-          }, index * 50);
-        });
+        if (!isClicked) {
+          tooltip.classList.add('visible');
+          animateTooltipContent(tooltip);
+        }
       });
+
       btn.addEventListener('mouseleave', () => {
-        tooltip.classList.remove('visible');
-        tooltip.querySelectorAll('p').forEach(p => {
-          p.style.opacity = '0';
-          p.style.transform = 'translateY(-10px)';
-        });
+        if (!isClicked) {
+          tooltip.classList.remove('visible');
+          resetTooltipContent(tooltip);
+        }
+      });
+
+      // Click behavior
+      btn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default button behavior
+        isClicked = !isClicked;
+        if (isClicked) {
+          tooltip.classList.add('visible');
+          animateTooltipContent(tooltip);
+        } else {
+          tooltip.classList.remove('visible');
+          resetTooltipContent(tooltip);
+        }
+      });
+
+      // Click outside to close
+      document.addEventListener('click', (event) => {
+        if (isClicked && !btn.contains(event.target) && !tooltip.contains(event.target)) {
+          isClicked = false;
+          tooltip.classList.remove('visible');
+          resetTooltipContent(tooltip);
+        }
+      });
+    }
+
+    function animateTooltipContent(tooltip) {
+      tooltip.querySelectorAll('p').forEach((p, index) => {
+        p.style.opacity = '0';
+        p.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+          p.style.opacity = '1';
+          p.style.transform = 'translateY(0)';
+        }, index * 50);
+      });
+    }
+
+    function resetTooltipContent(tooltip) {
+      tooltip.querySelectorAll('p').forEach(p => {
+        p.style.opacity = '0';
+        p.style.transform = 'translateY(-10px)';
       });
     }
 
@@ -1688,6 +1703,5 @@
       });
     }
   </script>
-  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'91cbe281c8a4adb9',t:'MTc0MTM2OTI5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
