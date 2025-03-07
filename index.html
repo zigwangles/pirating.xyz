@@ -371,8 +371,8 @@
       visibility: hidden;
       opacity: 0;
       background: var(--acrylic-dark);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
@@ -526,8 +526,8 @@
       visibility: hidden;
       opacity: 0;
       background: var(--acrylic-dark);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
@@ -584,8 +584,8 @@
       visibility: hidden;
       opacity: 0;
       background: var(--acrylic-dark);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
@@ -690,16 +690,18 @@
         padding-top: 4rem;
       }
 
+      /* Add blur to tooltips */
       .discord-tooltip, .partners-tooltip, .version-tooltip {
-        background: rgba(10, 10, 10, 0.65);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
+        background: rgba(10, 10, 10, 0.65); /* Semi-transparent background */
       }
 
+      /* Add blur to sidebar */
       .sidebar {
-        background: rgba(10, 10, 10, 0.65);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
+        background: rgba(10, 10, 10, 0.65); /* Semi-transparent background */
       }
 
       .version-btn {
