@@ -599,32 +599,37 @@
       .top-nav {
         padding: 0.5rem 1rem;
         transition: transform 0.3s ease-in-out;
+        top: 1rem; /* Move further up */
       }
 
       .top-nav.hidden {
-        transform: translateY(-100%); /* Match index 3 behavior */
+        transform: translateY(calc(-100% - 1rem));
       }
 
       .version-btn {
-        top: 0.5rem;
+        top: 1rem; /* Move further up */
         right: 0.5rem;
         transition: transform 0.3s ease-in-out, border-color 0.2s ease;
       }
 
       .version-btn.hidden {
-        transform: translateY(-100%); /* Match index 3 behavior */
+        transform: translateY(calc(-100% - 1rem));
+      }
+
+      .header {
+        padding-top: 4rem; /* Push title down */
       }
 
       .version-tooltip,
       .discord-tooltip,
       .partners-tooltip {
-        transform: translateY(-100%); /* Start off-screen */
+        transform: translateY(-100%);
       }
 
       .version-tooltip.visible,
       .discord-tooltip.visible,
       .partners-tooltip.visible {
-        transform: translateY(0); /* Slide in when visible */
+        transform: translateY(0);
       }
     }
 
@@ -1500,12 +1505,10 @@
       animateSubcategories();
     }
   
-    // Click to toggle sidebar
     menuBtn.addEventListener('click', () => {
       sidebar.classList.toggle('active');
     });
   
-    // Hover to show sidebar, hide when leaving unless clicked open
     let isSidebarClicked = false;
   
     menuBtn.addEventListener('click', () => {
@@ -1524,7 +1527,6 @@
       }
     });
   
-    // Keep sidebar open when hovering over it, hide when leaving unless clicked
     sidebar.addEventListener('mouseenter', () => {
       if (!isSidebarClicked) {
         sidebar.classList.add('active');
@@ -1537,14 +1539,13 @@
       }
     });
   
-    // Click outside to close sidebar
     document.addEventListener('click', (event) => {
       const isClickInsideSidebar = sidebar.contains(event.target);
       const isClickOnMenuBtn = menuBtn.contains(event.target);
   
       if (!isClickInsideSidebar && !isClickOnMenuBtn && sidebar.classList.contains('active')) {
         sidebar.classList.remove('active');
-        isSidebarClicked = false; // Reset clicked state when closing via click-outside
+        isSidebarClicked = false;
       }
     });
   
@@ -1557,7 +1558,7 @@
           updateSubcategories(category);
           filterApps(category);
           sidebar.classList.remove('active');
-          isSidebarClicked = false; // Reset clicked state when selecting a category
+          isSidebarClicked = false;
           animateCategories();
         });
       });
@@ -1573,7 +1574,7 @@
           updateSubcategories(category);
           filterApps(category);
           sidebar.classList.remove('active');
-          isSidebarClicked = false; // Reset clicked state when clicking a link
+          isSidebarClicked = false;
         });
       });
     }
@@ -1670,15 +1671,17 @@
         const tooltips = document.querySelectorAll('.version-tooltip, .discord-tooltip, .partners-tooltip');
   
         if (currentScroll > lastScroll && currentScroll > 50) {
-          topNav.classList.add('hidden');
-          betaBtn.classList.add('hidden');
+          // Fully hide buttons off-screen
+          topNav.style.transform = 'translateY(calc(-100% - 1rem))'; // Account for initial top: 1rem
+          betaBtn.style.transform = 'translateY(calc(-100% - 1rem))'; // Account for initial top: 1rem
           tooltips.forEach(tooltip => {
             tooltip.classList.remove('visible');
             resetTooltipContent(tooltip);
           });
         } else {
-          topNav.classList.remove('hidden');
-          betaBtn.classList.remove('hidden');
+          // Fully show buttons when scrolling up
+          topNav.style.transform = 'translateY(0)';
+          betaBtn.style.transform = 'translateY(0)';
         }
         lastScroll = currentScroll;
       });
