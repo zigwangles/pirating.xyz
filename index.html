@@ -347,7 +347,7 @@
       background: var(--acrylic-light);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid transparent; /* Base border width */
+      border: 1px solid transparent;
       color: var(--text);
       font-size: 1rem;
       font-weight: 500;
@@ -378,7 +378,7 @@
       color: var(--text);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid rgba(250, 71, 91, 0.4); /* Match button border width */
+      border: 1px solid rgba(250, 71, 91, 0.4);
       position: fixed;
       z-index: 10;
       transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -491,7 +491,7 @@
       -webkit-backdrop-filter: blur(8px);
       padding: 1rem;
       border-radius: var(--border-radius);
-      border: 1px solid rgba(250, 71, 91, 0.4); /* Match button border width */
+      border: 1px solid rgba(250, 71, 91, 0.4);
       z-index: 9;
       transition: left 0.5s ease-in-out;
       overflow-y: auto;
@@ -599,7 +599,7 @@
       .top-nav {
         padding: 0.5rem 1rem;
         transition: transform 0.3s ease-in-out;
-        top: 1rem; /* Move further up */
+        top: 1rem;
       }
 
       .top-nav.hidden {
@@ -607,7 +607,7 @@
       }
 
       .version-btn {
-        top: 1rem; /* Move further up */
+        top: 1rem;
         right: 0.5rem;
         transition: transform 0.3s ease-in-out, border-color 0.2s ease;
       }
@@ -617,7 +617,7 @@
       }
 
       .header {
-        padding-top: 4rem; /* Push title down */
+        padding-top: 4rem;
       }
 
       .version-tooltip,
@@ -650,11 +650,11 @@
 
     @media (max-width: 1024px) {
       .sidebar {
-        height: calc(100vh - 3.5rem); /* Ensure full height */
-        top: 3.5rem; /* Position below top nav */
-        backdrop-filter: blur(8px) !important; /* Reinforce blur effect */
-        -webkit-backdrop-filter: blur(8px) !important; /* Safari support */
-        transform: translateZ(0); /* Prevent clipping */
+        height: calc(100vh - 3.5rem);
+        top: 3.5rem;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        transform: translateZ(0);
       }
 
       .sidebar::before {
@@ -676,7 +676,6 @@
       }
     }
 
-    /* Style for the "Partners of Pirating.xyz" to match the title gradient */
     .partners-tooltip p:first-child strong {
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
@@ -684,14 +683,12 @@
       color: transparent;
     }
 
-    /* Increase space between emojis and "Daisuke Signer" */
     .partners-tooltip p:last-child a {
       display: flex;
       align-items: center;
-      gap: 0.75rem; /* Adjust this value to increase/decrease spacing */
+      gap: 0.75rem;
     }
 
-    /* Ensure the emojis remain properly sized */
     .partners-tooltip p:last-child a span {
       font-size: 0.8rem;
     }
@@ -1702,15 +1699,13 @@
         const tooltips = document.querySelectorAll('.version-tooltip, .discord-tooltip, .partners-tooltip');
   
         if (currentScroll > lastScroll && currentScroll > 50) {
-          // Fully hide buttons off-screen
-          topNav.style.transform = 'translateY(calc(-100% - 1rem))'; // Account for initial top: 1rem
-          betaBtn.style.transform = 'translateY(calc(-100% - 1rem))'; // Account for initial top: 1rem
+          topNav.style.transform = 'translateY(calc(-100% - 1rem))';
+          betaBtn.style.transform = 'translateY(calc(-100% - 1rem))';
           tooltips.forEach(tooltip => {
             tooltip.classList.remove('visible');
             resetTooltipContent(tooltip);
           });
         } else {
-          // Fully show buttons when scrolling up
           topNav.style.transform = 'translateY(0)';
           betaBtn.style.transform = 'translateY(0)';
         }
